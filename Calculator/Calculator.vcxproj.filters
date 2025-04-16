@@ -57,6 +57,12 @@
     <ClCompile Include="Parser\MathParser.c">
       <Filter>Source Files\Parser</Filter>
     </ClCompile>
+    <ClCompile Include="Parser\ASTNode.c">
+      <Filter>Source Files\Parser</Filter>
+    </ClCompile>
+    <ClCompile Include="Parser\ASTNodeStack.c">
+      <Filter>Source Files\Parser</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Constants.h">
@@ -81,6 +87,12 @@
       <Filter>Header Files\Lexer</Filter>
     </ClInclude>
     <ClInclude Include="Parser\MathParser.h">
+      <Filter>Header Files\Parser</Filter>
+    </ClInclude>
+    <ClInclude Include="Parser\ASTNode.h">
+      <Filter>Header Files\Parser</Filter>
+    </ClInclude>
+    <ClInclude Include="Parser\ASTNodeStack.h">
       <Filter>Header Files\Parser</Filter>
     </ClInclude>
   </ItemGroup>

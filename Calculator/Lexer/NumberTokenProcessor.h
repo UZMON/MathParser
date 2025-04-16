@@ -3,19 +3,16 @@
 
 /// <summary>
 /// Represents the result of processing a number token from a sequence of SymbolBlocks.
-/// </summary>
-/// <remarks>
 /// Includes the parsed token and the index of the last SymbolBlock that forms part of the token.
-/// </remarks>
-/// <field name="token">The resulting number token (IntegerToken or DecimalToken).</field>
-/// <field name="endPosition">The index of the last SymbolBlock included in the token.</field>
-typedef struct
+/// </summary>
+typedef struct NumberTokenResult NumberTokenResult;
+struct NumberTokenResult
 {
 	/// The resulting number token (IntegerToken or DecimalToken).
 	Token token;
 	/// The index of the last SymbolBlock included in the token.
 	size_t endPosition;
-} NumberTokenResult;
+};
 
 /// <summary>
 /// Creates a number token based on a sequence of SymbolBlocks.

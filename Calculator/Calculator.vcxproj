@@ -133,6 +133,8 @@
     <ClCompile Include="Lexer\Symbol.c" />
     <ClCompile Include="Lexer\SymbolBlock.c" />
     <ClCompile Include="main.c" />
+    <ClCompile Include="Parser\ASTNode.c" />
+    <ClCompile Include="Parser\ASTNodeStack.c" />
     <ClCompile Include="Parser\MathParser.c" />
     <ClCompile Include="Utils\ErrorPrinter.c" />
   </ItemGroup>
@@ -143,6 +145,8 @@
     <ClInclude Include="Lexer\NumberTokenProcessor.h" />
     <ClInclude Include="Lexer\Symbol.h" />
     <ClInclude Include="Lexer\SymbolBlock.h" />
+    <ClInclude Include="Parser\ASTNode.h" />
+    <ClInclude Include="Parser\ASTNodeStack.h" />
     <ClInclude Include="Parser\MathParser.h" />
     <ClInclude Include="Utils\ErrorPrinter.h" />
   </ItemGroup>

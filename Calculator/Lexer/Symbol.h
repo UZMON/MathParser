@@ -34,7 +34,7 @@ typedef enum
 #define SYMBOL(SymbolName,SymbolCharacters,SymbolBlockMax,tokenType) SymbolName,
 	SymbolsList
 #undef SYMBOL
-	SymbolsCount
+	SymbolsCount //Should Always be the last ! 
 } Symbol;
 
 

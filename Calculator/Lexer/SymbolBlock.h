@@ -5,12 +5,13 @@
 /// <summary>
 /// The SymbolBlock is an array of identical Symbol types found next to each other (The maximum length depends on the symbol type).
 /// </summary>
-typedef struct
+typedef struct SymbolBlock SymbolBlock;
+struct SymbolBlock
 {
 	Symbol symbol;
 	char* valuePtr;
 	size_t length;
-} SymbolBlock;
+};
 
 //The maximum length of SymbolBlock depending on the symbol type.
 const size_t SymbolBlockMaximumLength[SymbolsCount];
