@@ -4,7 +4,7 @@
 
 const size_t SymbolBlockMaximumLength[SymbolsCount] = {
 	#define SYMBOL(SymbolName,SymbolCharacters,SymbolBlockMax,tokenType)  \
-		[SymbolName] = SymbolBlockMax, 
+		[SymbolName##Symbol] = SymbolBlockMax, 
 		SymbolsList
 	#undef SYMBOL
 		/*Expands to :
@@ -34,4 +34,22 @@ SymbolBlock ReadSymbolBlock(char* dataPtr, Symbol wantedSymbol)
 		CurrentSymbolBlock.length++;
 	}
 	return CurrentSymbolBlock;
+}
+
+void ReadSymbolBlocks(const char* dataPtr, SymbolBlock* outSymbolBlocks, size_t* outCount)
+{
+	size_t length = strlen(dataPtr);
+	size_t symbolBlocksCount = 0;
+
+	for (size_t i = 0; i < length;)
+	{
+		char currentCharacter = dataPtr[i];
+		Symbol currentSymbol = GetSymbol(currentCharacter);
+		SymbolBlock currentToken = ReadSymbolBlock(dataPtr + i, currentSymbol);
+		outSymbolBlocks[symbolBlocksCount] = currentToken;
+		symbolBlocksCount++;
+		i += currentToken.length;
+	}
+
+	*outCount = symbolBlocksCount;
 }

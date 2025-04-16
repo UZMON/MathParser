@@ -1,87 +1,59 @@
 #include <stdlib.h>
 #include <string.h>
 #include "Lexer.h"
+#include "SymbolHandlers.h"
 #include "../Utils/ErrorPrinter.h"
 #include "SymbolBlock.h"
-#include "NumberTokenProcessor.h"
 #include "../Constants.h"
 
 void Lex(char* dataPtr, Token* outTokens, size_t* outCount, int* error)
 {
 	*error = 0;
+
 	SymbolBlock SymbolBlocks[MAX_EXPRESSION_SIZE];
 	size_t symbolBlocksCount = 0;
-	ReadSymbolBlocks(dataPtr,SymbolBlocks,&symbolBlocksCount);
-	Token tokens[MAX_EXPRESSION_SIZE];
-	size_t tokensCount = 0;
-	ReadTokens(SymbolBlocks,symbolBlocksCount,outTokens,&tokensCount,error);
-	*outCount = tokensCount;
+	ReadSymbolBlocks(dataPtr , SymbolBlocks , &symbolBlocksCount);
+
+	Token tokens[MAX_EXPRESSION_SIZE] = {0};
+	SymbolBlockArr symbolBlockArr = { SymbolBlocks , symbolBlocksCount };
+	ReadTokens(symbolBlockArr , outTokens , outCount , error);
 }
 
-void ReadSymbolBlocks(const char* dataPtr, SymbolBlock* outSymbolBlocks, size_t* outCount)
-{
-	size_t length = strlen(dataPtr);
-	size_t symbolBlocksCount = 0;
-	for (size_t i = 0; i < length;)
-	{
-		char currentCharacter = dataPtr[i];
-		Symbol currentSymbol = GetSymbol(currentCharacter);
-		SymbolBlock currentToken = ReadSymbolBlock(dataPtr + i, currentSymbol);
-		outSymbolBlocks[symbolBlocksCount] = currentToken;
-		symbolBlocksCount++;
-		i += currentToken.length;
-	}
-	*outCount = symbolBlocksCount;
-}
-
-void ReadTokens(const SymbolBlock* symbolBlocks, size_t symbolBlocksCount, Token* outTokens, size_t* outCount, int* error)
+void ReadTokens(SymbolBlockArr symbolBlockArr, Token* outTokens, size_t* outCount, int* error)
 {
 	*error = 0;
-	size_t tokensCount = 0;
+	*outCount = 0;
+	Position position = { 1 , 1 }; // Line : 1 , Column : 1 
+	SymbolBlock* symbolBlocks = symbolBlockArr.symbolBlocks;
+	size_t symbolBlocksCount = symbolBlockArr.length;
+	
 	for (size_t i = 0; i < symbolBlocksCount; i++)
 	{
 		SymbolBlock currentSymbolBlock = symbolBlocks[i];
 		Symbol currentSymbol = currentSymbolBlock.symbol;
-		// Handle numeric tokens (digits or leading dot)
-		if (currentSymbol == DigitSymbol || currentSymbol == DotSymbol)
-		{
-			NumberTokenResult result = ProcessNumberToken(symbolBlocks, symbolBlocksCount, i);
-			outTokens[tokensCount++] = result.token;
-			i = result.endPosition;
-			continue;
-		}
-
-		// Handle unknown symbols
-		if (currentSymbol == UnknownSymbol)
-		{
-			PrintErrorf("Unknown Symbol found: '%c'", *currentSymbolBlock.valuePtr);
-			*error = 1;
-			return;
-		}
-
-		// Skip separator (used to mark end of input or expression)
-		if (currentSymbol == SeparatorSymbol)
-		{
-			continue;
-		}
-
-		// Handle unmapped symbols
 		TokenType mappedTokenType = SymbolTokenTable[currentSymbol];
-		if (mappedTokenType == ErrorToken)
+
+		// Handle special symbols with custom token logic
+		if (mappedTokenType == SpecialToken)
 		{
-			PrintErrorf("Can't find suitable Token for %s", SymbolNameTable[currentSymbol]);
-			*error = 1;
-			return;
+			SymbolHandler symbolHandler = symbolHandlerTable[currentSymbol];
+			
+			if(!symbolHandler)
+			{
+				// @ERROR[Lexer]: No suitable Token for symbol
+				PrintErrorf("Can't find suitable Token for %s", SymbolNameTable[currentSymbol]);
+				*error = 1;
+				return;
+			}
+
+			symbolHandler(symbolBlockArr, &i, &position, outTokens, outCount, error);
+			if (*error) return;
+			continue;
 		}
 
-		// Handle all other valid symbols (operators, parentheses, etc.)
-		Token token = {
-			.tokenType = mappedTokenType,
-			.valuePtr = currentSymbolBlock.valuePtr,
-			.length = currentSymbolBlock.length
-		};
-
-		outTokens[tokensCount++] = token;
+		// Handle all simple symbols (operators, identifiers, parentheses, etc.)
+		Token token = CreateToken(mappedTokenType, currentSymbolBlock.valuePtr, currentSymbolBlock.length, position);
+		position.column += currentSymbolBlock.length;
+		outTokens[(*outCount)++] = token;
 	}
-	*outCount = tokensCount;
 }

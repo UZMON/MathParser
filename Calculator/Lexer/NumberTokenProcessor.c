@@ -2,10 +2,10 @@
 #include "../Constants.h"
 #include "../Utils/ErrorPrinter.h"
 
-NumberTokenResult ProcessNumberToken(const SymbolBlock* symbolBlocks, size_t symbolBlocksCount,size_t startPosition)
+NumberTokenResult ProcessNumberToken(const SymbolBlock* symbolBlocks , size_t symbolBlocksCount , size_t startIndex)
 {
 	// Get pointer to the first character of the first symbol block.
-	char* firstSymbolBlockPtr = symbolBlocks[startPosition].valuePtr;
+	char* firstSymbolBlockPtr = symbolBlocks[startIndex].valuePtr;
 
 	// Initialize the token with default values (assuming it's an integer by default).
 	Token currentToken = { 
@@ -19,7 +19,8 @@ NumberTokenResult ProcessNumberToken(const SymbolBlock* symbolBlocks, size_t sym
 	// - Only one dot is allowed (e.g., "12.34" is valid, "12.3.4" is not).
 	// - The loop ends when a non-digit and non-dot symbol is encountered.
 	int dotAdded = 0;
-	for (size_t i = startPosition; i < symbolBlocksCount; i++)
+	size_t i = startIndex;
+	for (; i < symbolBlocksCount; i++)
 	{
 		SymbolBlock currentSymbolBlock = symbolBlocks[i];
 		Symbol currentSymbol = currentSymbolBlock.symbol;
@@ -29,7 +30,8 @@ NumberTokenResult ProcessNumberToken(const SymbolBlock* symbolBlocks, size_t sym
 			if (dotAdded)
 			{
 				Token errorToken = { ErrorToken,NULL,0 };
-				NumberTokenResult errorResult = { errorToken, currentSymbolBlock.valuePtr };
+				NumberTokenResult errorResult = { errorToken, 0 };
+				// @ERROR[NumberTokenProcessor]: Unexpected token / malformed number .
 				PrintErrorf("Unexpected token '%c' ", *currentSymbolBlock.valuePtr);
 				return errorResult;
 			}
@@ -39,12 +41,14 @@ NumberTokenResult ProcessNumberToken(const SymbolBlock* symbolBlocks, size_t sym
 		else if (currentSymbol != DigitSymbol)
 		{
 			// Non-digit and non-dot symbol encountered — end of number.
-			NumberTokenResult result = { 
-			 	.token = currentToken ,
-				.endPosition = i - 1
-			};
-			return result;
+			break;
 		}
 		currentToken.length += currentSymbolBlock.length;
 	}
+
+	NumberTokenResult result = {
+				.token = currentToken ,
+				.endPosition = i - 1
+	};
+	return result;
 }

@@ -1,30 +1,42 @@
 #pragma once
 #include <stddef.h>
 
+// Defines a list of Node types that composes the AST (Abstract syntax tree).
+// Format:
+//     AST_NODE_TYPE(NodeName, NodeCategory)
+//Note:
+//		Node categories (like ValueNodeCategory, OperatorNodeCategory) are defined separately in NodeCategory enum.
 #define ASTNodeTypeList \
-	AST_NODE_TYPE(NodeType_Float, NodeCategory_Value)  \
-	AST_NODE_TYPE(NodeType_Integer, NodeCategory_Value) \
-	AST_NODE_TYPE(NodeType_Addition, NodeCategory_Operator) \
-	AST_NODE_TYPE(NodeType_Subtraction, NodeCategory_Operator) \
-	AST_NODE_TYPE(NodeType_Multiplication, NodeCategory_Operator) \
-	AST_NODE_TYPE(NodeType_Division, NodeCategory_Operator) \
-	AST_NODE_TYPE(NodeType_Remainder, NodeCategory_Operator) \
+	AST_NODE_TYPE(None, NoneNodeCategory)  \
+	/* Value Nodes */ \
+	AST_NODE_TYPE(Integer, ValueNodeCategory) \
+	AST_NODE_TYPE(Decimal, ValueNodeCategory)  \
+	/* Operator Nodes */ \
+	AST_NODE_TYPE(Addition, OperatorNodeCategory) \
+	AST_NODE_TYPE(Subtraction, OperatorNodeCategory) \
+	AST_NODE_TYPE(Multiplication, OperatorNodeCategory) \
+	AST_NODE_TYPE(Division, OperatorNodeCategory) \
+	AST_NODE_TYPE(Remainder, OperatorNodeCategory) \
 
-//Categories for NodeTypes used to simplify checking for the type of the Node.
-typedef enum
+//Categories for NodeTypes ; used to simplify checking for the type of the Node.
+typedef enum NodeCategory NodeCategory;
+enum NodeCategory
 {
-	NodeCategory_Value ,
-	NodeCategory_Operator
-}NodeCategory;
+	NoneNodeCategory,
+	ValueNodeCategory,
+	OperatorNodeCategory,
+	NodeCategory_Count //This should always be the last one.
+};
 
 //Node Types used in the Abstract Syntax Tree
-typedef enum
+typedef enum ASTNodeType ASTNodeType;
+enum ASTNodeType
 {
-#define AST_NODE_TYPE(ASTNodeTypeName, ASTNodeCategory) ASTNodeTypeName,
+#define AST_NODE_TYPE(ASTNodeTypeName, ASTNodeCategory) ASTNodeTypeName##NodeType,
 	ASTNodeTypeList
 #undef AST_NODE_TYPE
 	ASTNodeType_Count //Should Always be the last ! 
-}ASTNodeType;
+};
 
 //Maps Every ASTNodeType to its corresponding category .
 const NodeCategory NodeTypeCategoryTable[ ASTNodeType_Count ];
@@ -40,14 +52,14 @@ struct ASTNode
 		struct 
 		{
 			const char* valuePtr;
-			const size_t length;
+			size_t length;
 		} value;
 
 		//For Operator Node Types
 		struct
 		{
-			ASTNode* left;
-			ASTNode* right;
+			const ASTNode* left;
+			const ASTNode* right;
 		} op;
 	};
 };

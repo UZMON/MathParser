@@ -1,32 +1,31 @@
 #include "Symbol.h"
 
 const char* Symbols[SymbolsCount] = {
-	#define SYMBOL(SymbolName,SymbolCharacters,SymbolBlockMax,tokenType)  \
-		[SymbolName] = SymbolCharacters, 
-		SymbolsList
+	#define SYMBOL(SymbolName, SymbolCharacters, SymbolBlockMax, tokenType) \
+		[SymbolName##Symbol] = SymbolCharacters,
+	SymbolsList
 	#undef SYMBOL
-		/*Expands to :
-			[UnknownSymbol] = "" ,
-			[NumberSymbol] = "0123456789",
-			...etc
-		*/
+	/*Expands to :
+		[UnknownSymbol] = "" ,
+		[NumberSymbol] = "0123456789",
+		...etc
+	*/
 };
 
 const char* SymbolNameTable[SymbolsCount] = {
-	#define SYMBOL(SymbolName,CharacterSet,MaxLength,tokenType) \
-		[SymbolName] = #SymbolName,
-		SymbolsList
+	#define SYMBOL(SymbolName, CharacterSet, MaxLength, tokenType) \
+		[SymbolName##Symbol] = #SymbolName,
+	SymbolsList
 	#undef SYMBOL
 };
 
-// Maps each Symbol to its corresponding TokenType.
-// Symbols with TokenType = 0 are handled specially in the lexer (e.g., in ReadTokens()).
 const TokenType SymbolTokenTable[SymbolsCount] = {
-	#define SYMBOL(SymbolName,CharacterSet,MaxLength,tokenType) \
-		[SymbolName] = tokenType,
-		SymbolsList
+	#define SYMBOL(SymbolName, CharacterSet, MaxLength, tokenType) \
+		[SymbolName##Symbol] = tokenType,
+	SymbolsList
 	#undef SYMBOL
 };
+
 
 void InitSymbolsTable()
 {
@@ -38,7 +37,8 @@ void InitSymbolsTable()
 		SymbolsTable[i] = UnknownSymbol;
 	}
 
-	//Using the Symbols array to initialize the SymbolsTable
+	//Using the Symbols array to initialize the SymbolsTable.
+	//Symbols array is a mapping from each Symbol to its corresponding character set.
 	for (int symbolIdx = 0; symbolIdx < SymbolsCount; symbolIdx++)
 	{
 		char* Characters = Symbols[symbolIdx];

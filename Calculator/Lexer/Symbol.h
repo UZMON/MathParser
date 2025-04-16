@@ -2,40 +2,43 @@
 #include <stddef.h>
 #include "../LexerParserShared/Token.h"
 
+#define DIGITS        "0123456789"
+#define WHITESPACE    " \t\r"
+#define BRACKETS_OPEN "(["
+#define BRACKETS_CLOSE ")]"
+
 #define SYMBOL_TABLE_SIZE 128
 // NOTE: You may want to adjust SYMBOL_TABLE_SIZE based on the highest Unicode value
 // used in any of the character sets below.
 //
-// Each SYMBOL is defined using the following parameters:
-// SYMBOL(
-//     SymbolName,               // A unique name for the symbol
-//     CharacterSet,             // A string of characters that this symbol matches
-//     MaxLength,                // Maximum length for a block of consecutive matching symbols
-//     TokenType                 // Token it maps to; use SpecialSymbolToken if it is handled specially in ReadTokens() of Lexer.c
-// )
+// Each SYMBOL is defined using:
+// SYMBOL(SymbolName, CharacterSet, MaxLength, TokenType)
+// 
+// TokenType is set to SpecialToken for those handled specially in ReadTokens() of Lexer.c
+// i.e they can't be converted directly into a token.
 #define SymbolsList \
-	SYMBOL(UnknownSymbol, "",1,SpecialSymbolToken) \
-	SYMBOL(DigitSymbol, "0123456789",100,SpecialSymbolToken) \
-	SYMBOL(DotSymbol, ".",1,SpecialSymbolToken) \
-	SYMBOL(AdditionOperatorSymbol, "+",1,AdditionOperatorToken) \
-	SYMBOL(SubtractionOperatorSymbol, "-",1,SubtractionOperatorToken) \
-	SYMBOL(MultiplicationOperatorSymbol, "*",1,MultiplicationOperatorToken) \
-	SYMBOL(DivisionOperatorSymbol, "/",1,DivisionOperatorToken) \
-	SYMBOL(RemainderOperatorSymbol, "%",1,RemainderOperatorToken) \
-	SYMBOL(OpenedBracketSymbol, "([",1,OpenedBracketToken) \
-	SYMBOL(ClosedBracketSymbol, ")]",1,ClosedBracketToken) \
-	SYMBOL(SeparatorSymbol, " \t\n\r",100,SpecialSymbolToken) 
+    SYMBOL(Unknown,                "",           1,   SpecialToken) /* Triggers error */ \
+    SYMBOL(Digit,                  DIGITS, 100, SpecialToken) \
+    SYMBOL(Dot,                    ".",          1,   SpecialToken) \
+    SYMBOL(AdditionOperator,      "+",          1,   AdditionOperatorToken) \
+    SYMBOL(SubtractionOperator,   "-",          1,   SubtractionOperatorToken) \
+    SYMBOL(MultiplicationOperator,"*",          1,   MultiplicationOperatorToken) \
+    SYMBOL(DivisionOperator,      "/",          1,   DivisionOperatorToken) \
+    SYMBOL(RemainderOperator,     "%",          1,   RemainderOperatorToken) \
+    SYMBOL(OpenedBracket,         BRACKETS_OPEN,         1,   OpenedBracketToken) \
+    SYMBOL(ClosedBracket,          BRACKETS_CLOSE,         1,   ClosedBracketToken) \
+    SYMBOL(Separator,                 WHITESPACE,    100, SpecialToken) \
+    SYMBOL(NewLine,                      "\n",    1, SpecialToken) \
 
-/// <summary>
-/// Represents the different types of Symbols used to create a Token
-/// </summary>
-typedef enum
+// Represents the different types of Symbols used to create a Token
+typedef enum Symbol Symbol;
+enum Symbol
 {
-#define SYMBOL(SymbolName,SymbolCharacters,SymbolBlockMax,tokenType) SymbolName,
+#define SYMBOL(SymbolName,SymbolCharacters,SymbolBlockMax,tokenType) SymbolName##Symbol,
 	SymbolsList
 #undef SYMBOL
 	SymbolsCount //Should Always be the last ! 
-} Symbol;
+};
 
 
 const TokenType SymbolTokenTable[SymbolsCount];

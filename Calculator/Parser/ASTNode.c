@@ -3,12 +3,12 @@
 const NodeCategory NodeTypeCategoryTable[ASTNodeType_Count] =
 {
 	#define AST_NODE_TYPE(ASTNodeTypeName, ASTNodeCategory) \
-		[ASTNodeTypeName] = ASTNodeCategory,
+		[ASTNodeTypeName##NodeType] = ASTNodeCategory,
 		ASTNodeTypeList
 	#undef AST_NODE_TYPE
 		/*Expands to :
-			[NodeType_Float] = NodeCategory_Value ,
-			[NodeType_Integer] = NodeCategory_Value,
+			[FloatNodeType] = ValueNodeCategory ,
+			[IntegerNodeType] = ValueNodeCategory,
 			...etc
 		*/
 };

@@ -132,10 +132,12 @@
     <ClCompile Include="Lexer\NumberTokenProcessor.c" />
     <ClCompile Include="Lexer\Symbol.c" />
     <ClCompile Include="Lexer\SymbolBlock.c" />
+    <ClCompile Include="Lexer\SymbolHandlers.c" />
     <ClCompile Include="main.c" />
     <ClCompile Include="Parser\ASTNode.c" />
     <ClCompile Include="Parser\ASTNodeStack.c" />
-    <ClCompile Include="Parser\MathParser.c" />
+    <ClCompile Include="Parser\ASTPool.c" />
+    <ClCompile Include="Parser\Parser.c" />
     <ClCompile Include="Utils\ErrorPrinter.c" />
   </ItemGroup>
   <ItemGroup>
@@ -143,11 +145,14 @@
     <ClInclude Include="LexerParserShared\Token.h" />
     <ClInclude Include="Lexer\Lexer.h" />
     <ClInclude Include="Lexer\NumberTokenProcessor.h" />
+    <ClInclude Include="Lexer\Position.h" />
     <ClInclude Include="Lexer\Symbol.h" />
     <ClInclude Include="Lexer\SymbolBlock.h" />
+    <ClInclude Include="Lexer\SymbolHandlers.h" />
     <ClInclude Include="Parser\ASTNode.h" />
     <ClInclude Include="Parser\ASTNodeStack.h" />
-    <ClInclude Include="Parser\MathParser.h" />
+    <ClInclude Include="Parser\ASTPool.h" />
+    <ClInclude Include="Parser\Parser.h" />
     <ClInclude Include="Utils\ErrorPrinter.h" />
   </ItemGroup>
   <ItemGroup>

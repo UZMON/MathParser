@@ -11,5 +11,9 @@ struct ASTNodeStack
 };
 
 void InitASTNodeStack ( ASTNodeStack* stack );
+// Returns 0 on success, or 1 on error (e.g., if the stack is full).
 int PushASTNode ( ASTNodeStack* stack , ASTNode* node );
+//Returns the ASTNode Ptr , or NULL on error (e.g., if the stack is empty).
 ASTNode* PopASTNode ( ASTNodeStack* stack );
+//Returns the ASTNode Ptr , or NULL if the stack is empty.
+ASTNode* PeekASTNode ( ASTNodeStack* stack );

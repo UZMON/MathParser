@@ -20,9 +20,9 @@ struct NumberTokenResult
 /// </summary>
 /// <param name="symbolBlocks">The array of SymbolBlocks to process.</param>
 /// <param name="symbolBlocksCount">The count of SymbolBlocks inside the symbolBlocks array.</param>
-/// <param name="startPosition">The starting index in the SymbolBlock array.</param>
+/// <param name="startIndex">The starting index in the SymbolBlock array.</param>
 /// <returns>
 /// A NumberTokenResult containing the parsed token and the ending index.
 /// If the token is invalid, the token field will be an ErrorToken (e.g., token.valuePtr = NULL).
 /// </returns>
-NumberTokenResult ProcessNumberToken(const SymbolBlock* symbolBlocks, size_t symbolBlocksCount, size_t startPosition);
+NumberTokenResult ProcessNumberToken(const SymbolBlock* symbolBlocks, size_t symbolBlocksCount, size_t startIndex );

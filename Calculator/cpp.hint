@@ -3,3 +3,7 @@
 // For more information see https://go.microsoft.com/fwlink/?linkid=865984
 #define SymbolsList SYMBOL(UnknownSymbol, "") SYMBOL(NumberSymbol, "0123456789") SYMBOL(MathOperatorSymbol, "+-*/%") SYMBOL(OpenedBracketSymbol, "([") SYMBOL(ClosedBracketSymbol, ")]") SYMBOL(SeparatorSymbol, " \t\n\r")
 #define ASTNodeTypeList AST_NODE_TYPE(NodeType_Float,NodeCategory_Value) AST_NODE_TYPE(NodeType_Integer,NodeCategory_Value) AST_NODE_TYPE(NodeType_Addition,NodeCategory_Operator) AST_NODE_TYPE(NodeType_Subtraction,NodeCategory_Operator) AST_NODE_TYPE(NodeType_Multiplication,NodeCategory_Operator) AST_NODE_TYPE(NodeType_Division,NodeCategory_Operator) AST_NODE_TYPE(NodeType_Remainder,NodeCategory_Operator)
+#define TokensList TOKEN(Error, -1) TOKEN(Special, -1) TOKEN(Integer, ValueTokenCategory) TOKEN(Decimal, ValueTokenCategory) TOKEN(AdditionOperator, OperatorTokenCategory) TOKEN(SubtractionOperator,OperatorTokenCategory) TOKEN(MultiplicationOperator, OperatorTokenCategory) TOKEN(DivisionOperator, OperatorTokenCategory) TOKEN(RemainderOperator, OperatorTokenCategory) TOKEN(OpenedBracket, BracketTokenCategory) TOKEN(ClosedBracket, BracketTokenCategory)
+#define MAX_EXPRESSION_SIZE 100
+#define MAX_AST_NODES		 MAX_EXPRESSION_SIZE
+#define MAX_AST_NODES_STACK		 MAX_AST_NODES
