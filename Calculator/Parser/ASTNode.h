@@ -1,22 +1,29 @@
 #pragma once
 #include <stddef.h>
+#include "../LexerParserShared/Position.h"
 
-// Defines a list of Node types that composes the AST (Abstract syntax tree).
-// Format:
-//     AST_NODE_TYPE(NodeName, NodeCategory)
-//Note:
-//		Node categories (like ValueNodeCategory, OperatorNodeCategory) are defined separately in NodeCategory enum.
+#define NO_PRECEDENCE -1
+
+// Defines a list of AST (Abstract Syntax Tree) node types.
+// Each entry has the format:
+//     AST_NODE_TYPE(NodeName, NodeCategory, Precedence)
+//
+// Notes:
+//   - Node categories (e.g., ValueNodeCategory, OperatorNodeCategory) are defined separately in the NodeCategory enum.
+//   - Precedence is used for operator nodes; use NO_PRECEDENCE for non-operator nodes which is the lowest precedence.
+//   - lower precedence value => Higher priority.
 #define ASTNodeTypeList \
-	AST_NODE_TYPE(None, NoneNodeCategory)  \
-	/* Value Nodes */ \
-	AST_NODE_TYPE(Integer, ValueNodeCategory) \
-	AST_NODE_TYPE(Decimal, ValueNodeCategory)  \
-	/* Operator Nodes */ \
-	AST_NODE_TYPE(Addition, OperatorNodeCategory) \
-	AST_NODE_TYPE(Subtraction, OperatorNodeCategory) \
-	AST_NODE_TYPE(Multiplication, OperatorNodeCategory) \
-	AST_NODE_TYPE(Division, OperatorNodeCategory) \
-	AST_NODE_TYPE(Remainder, OperatorNodeCategory) \
+    AST_NODE_TYPE(None, NoneNodeCategory , NO_PRECEDENCE)  \
+    /* Value Nodes */ \
+    AST_NODE_TYPE(Integer, ValueNodeCategory , NO_PRECEDENCE) \
+    AST_NODE_TYPE(Decimal, ValueNodeCategory , NO_PRECEDENCE)  \
+    /* Operator Nodes */ \
+    AST_NODE_TYPE(Addition, BinaryNodeCategory , 4) \
+    AST_NODE_TYPE(Subtraction, BinaryNodeCategory , 4) \
+    AST_NODE_TYPE(Multiplication, BinaryNodeCategory , 3) \
+    AST_NODE_TYPE(Division, BinaryNodeCategory , 3) \
+    AST_NODE_TYPE(Remainder, BinaryNodeCategory , 3) \
+
 
 //Categories for NodeTypes ; used to simplify checking for the type of the Node.
 typedef enum NodeCategory NodeCategory;
@@ -24,7 +31,7 @@ enum NodeCategory
 {
 	NoneNodeCategory,
 	ValueNodeCategory,
-	OperatorNodeCategory,
+	BinaryNodeCategory,
 	NodeCategory_Count //This should always be the last one.
 };
 
@@ -38,28 +45,39 @@ enum ASTNodeType
 	ASTNodeType_Count //Should Always be the last ! 
 };
 
-//Maps Every ASTNodeType to its corresponding category .
+//Maps every ASTNodeType to its corresponding category .
 const NodeCategory NodeTypeCategoryTable[ ASTNodeType_Count ];
+NodeCategory GetNodeCategory ( ASTNodeType type );
+
+//Maps every ASTNodeType to its corresponding precedence.
+const int NodeTypePrecedenceTable[ ASTNodeType_Count ];
+int GetNodePrecedence ( ASTNodeType type );
+
+//Returns 1 for true , 0 for false
+int isLeftAttachable ( ASTNodeType nodeType );
+//Returns 1 for true , 0 for false
+int isRightAttachable ( ASTNodeType nodeType );
 
 //The node struct which composes the AST.
 typedef struct ASTNode ASTNode;
 struct ASTNode
 {
 	ASTNodeType nodeType;
+	Position position;
 	union
 	{
+		//For Binary Node Types (Nodes that takes two children in the AST).
+		struct
+		{
+			const ASTNode* leftChild;
+			const ASTNode* rightChild;
+		} binary;
+
 		//For Value Node Types
 		struct 
 		{
 			const char* valuePtr;
 			size_t length;
 		} value;
-
-		//For Operator Node Types
-		struct
-		{
-			const ASTNode* left;
-			const ASTNode* right;
-		} op;
 	};
 };

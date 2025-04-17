@@ -9,11 +9,14 @@ struct ASTNodeStack
 	ASTNode* ASTNodes[ MAX_AST_NODES_STACK ];
 	size_t lastIndex;
 };
-
+//TODO add a general Init function for the parser.
 void InitASTNodeStack ( ASTNodeStack* stack );
+
 // Returns 0 on success, or 1 on error (e.g., if the stack is full).
 int PushASTNode ( ASTNodeStack* stack , ASTNode* node );
-//Returns the ASTNode Ptr , or NULL on error (e.g., if the stack is empty).
-ASTNode* PopASTNode ( ASTNodeStack* stack );
+//Returns the ASTNodePtr , or NULL if the stack is empty.
+ASTNode* PopASTStack ( ASTNodeStack* stack );
 //Returns the ASTNode Ptr , or NULL if the stack is empty.
-ASTNode* PeekASTNode ( ASTNodeStack* stack );
+ASTNode* PeekASTStack ( ASTNodeStack* stack );
+
+int ReduceTheStack ( ASTNodeStack* AST_Stack );

@@ -1,6 +1,6 @@
 #pragma once
 #include "SymbolBlock.h"
-#include "Position.h"
+#include "../LexerParserShared/Position.h"
 
 // SymbolHandler is a function that creates a token using custom logic for the specific symbol type.
 // Takes a SymbolBlockArr and a Position pointer to track the current parsing location.

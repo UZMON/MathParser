@@ -1,6 +1,6 @@
 #pragma once
 #include "../Parser/ASTNode.h"
-#include "../Lexer/Position.h"
+#include "../LexerParserShared/Position.h"
 
 // Defines a list of tokens used in the lexer/parser.
 // Format:

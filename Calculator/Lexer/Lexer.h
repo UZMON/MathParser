@@ -1,7 +1,7 @@
 #pragma once
 #include <stddef.h>
 #include "../LexerParserShared/Token.h"
-#include "Position.h"
+#include "../LexerParserShared/Position.h"
 #include "SymbolBlock.h"
 
 //TODO add an initialize function that also includes InitSymbolsTable found in Symbol.h

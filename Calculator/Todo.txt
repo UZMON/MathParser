@@ -1,3 +1,1 @@
-- Convert SymbolBlockArray into TokenArray in the lexer
-- Make the MainParser which will handle different parsers i.e. MathParser , Programming Parser , etc...
-- Make the Math Parser
+- TODO add Lookup(getters) functions for all tables

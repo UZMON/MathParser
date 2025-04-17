@@ -138,14 +138,15 @@
     <ClCompile Include="Parser\ASTNodeStack.c" />
     <ClCompile Include="Parser\ASTPool.c" />
     <ClCompile Include="Parser\Parser.c" />
+    <ClCompile Include="Parser\Priority.c" />
     <ClCompile Include="Utils\ErrorPrinter.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Constants.h" />
+    <ClInclude Include="LexerParserShared\Position.h" />
     <ClInclude Include="LexerParserShared\Token.h" />
     <ClInclude Include="Lexer\Lexer.h" />
     <ClInclude Include="Lexer\NumberTokenProcessor.h" />
-    <ClInclude Include="Lexer\Position.h" />
     <ClInclude Include="Lexer\Symbol.h" />
     <ClInclude Include="Lexer\SymbolBlock.h" />
     <ClInclude Include="Lexer\SymbolHandlers.h" />
@@ -153,7 +154,9 @@
     <ClInclude Include="Parser\ASTNodeStack.h" />
     <ClInclude Include="Parser\ASTPool.h" />
     <ClInclude Include="Parser\Parser.h" />
+    <ClInclude Include="Parser\Priority.h" />
     <ClInclude Include="Utils\ErrorPrinter.h" />
+    <ClInclude Include="Utils\Macros.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="cpp.hint" />

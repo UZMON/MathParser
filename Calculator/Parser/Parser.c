@@ -1,9 +1,10 @@
 #pragma once
 #include "Parser.h"
 #include "../Utils/ErrorPrinter.h"
+#include "../Utils/Macros.h"
 
 const TokenHandler tokenHandlerTable[] = {
-	[ValueTokenCategory] = HandleValue,   // e.g., Integer, Decimal
+	[ValueTokenCategory] = HandleOp,   // e.g., Integer, Decimal
 	[OperatorTokenCategory] = HandleOp,      // +, -, *, etc...
 	[BracketTokenCategory] = HandleBracket  // (, ), [, ]
 };
@@ -28,47 +29,37 @@ void ParseTokensToStack(TokenArray tokenArr , size_t StartIndex , ASTPool* AST_P
 int HandleValue(ASTPool* AST_Pool, ASTNodeStack* AST_Stack, Token token)
 {
 	ASTNodeType nodeType = TokenType_NodeType_Table[token.tokenType];
-	ASTNode* valueNode = CreateValueNode(AST_Pool, nodeType, token.valuePtr, token.length);
-
-	ASTNode* leftNode = PeekASTNode(AST_Stack);
-	// If there is no left node in the current stack, push the value node.
-	if (!leftNode)
-	{
-		PushASTNode(AST_Stack, valueNode);
-		return 0;
-	}
-
-	NodeCategory leftNodeCategory = NodeTypeCategoryTable[leftNode->nodeType];
-	// If the left node is not an operator, this is invalid grammar.
-	if (leftNodeCategory != OperatorNodeCategory)
-	{
-		// @ERROR[Parser]: Unexpected value token after non-operator node.
-		PrintErrorf("Unexpected token at '%.*s'", (int)token.length, token.valuePtr);
-		return 1;
-	}
-
-	// If the left node is an operator, attach valueNode as its right child.
-	leftNode->op.right = valueNode;
+	ASTNode* valueNode = CreateValueNode(AST_Pool, nodeType, token.valuePtr, token.length, token.position);
+	PushASTNode(AST_Stack, valueNode);
 	return 0;
 }
 
 int HandleOp(ASTPool* AST_Pool, ASTNodeStack* AST_Stack, Token token)
 {
 	ASTNodeType nodeType = TokenType_NodeType_Table[token.tokenType];
-	ASTNode* leftNode = PeekASTNode(AST_Stack);
+	ASTNode* leftNode = PeekASTStack(AST_Stack);
 	if (!leftNode)
 	{
 		// @Error[Parser]: Expected a left value for the operator.
-		PrintErrorf("Expected a left value for the operator at '%.*s'", (int)token.length, token.valuePtr);
+		PrintErrorf("Expected a left value for the operator '%.*s' at ( %d, %d )", (int)token.length, token.valuePtr , token.position.line , token.position.column);
 		return 1;
 	}
 
-	//TODO ADD Precedence 
-	//TODO Check if operator precedence less or more ...
-	//TODO Add leftside and rightside Category array for what operator accepts , this helps for checking unexpected tokens/nodes
+	int currentPrecedence = NodeTypePrecedenceTable[nodeType];
+	int leftSidePrecedence = NodeTypePrecedenceTable[leftNode->nodeType];
 
-	ASTNode* operatorNode = CreateOperatorNode(AST_Pool, nodeType, leftNode, NULL);
-	PushASTNode(AST_Stack, operatorNode);
+	if (currentPrecedence > leftSidePrecedence)
+	{
+		//Pop left node.
+		leftNode = PopASTStack(AST_Stack);
+		ASTNode* currentNode = CreateOperatorNode(AST_Pool, nodeType, leftNode, NULL);
+		PushASTNode(AST_Stack, currentNode);
+		return 0;
+	}
+	// If
+
+	
+	//TODO Add leftside and rightside Category array for what operator accepts , this helps for checking unexpected tokens/nodes
 	return 0;
 }
 
@@ -76,3 +67,7 @@ int HandleBracket(ASTPool* AST_Pool, ASTNodeStack* AST_Stack, Token token)
 {
 
 }
+
+//TODO : Move the Note to somewhere more suitable.
+// Note : 
+//			- It is obligatory by this logic that any node ( other than the top node !! ) closer to the topNode will always have higher priority than the ones far away

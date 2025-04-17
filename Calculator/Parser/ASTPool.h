@@ -17,7 +17,7 @@ struct ASTPool
 /// <param name="valuePtr">Pointer to the value data (i.e String representing the data).</param>
 /// <param name="valueLength">The length of the value data pointed by valuePtr.</param>
 /// <returns>Pointer to the newly created ASTNode in the ASTPool.</returns>
-ASTNode* CreateValueNode ( ASTPool* astPool , ASTNodeType nodeType , const char* valuePtr , size_t valueLength );
+ASTNode* CreateValueNode ( ASTPool* astPool , ASTNodeType nodeType , const char* valuePtr , size_t valueLength , Position position );
 
 /// <summary>
 /// Creates a new operator node within the specified ASTPool.
@@ -27,4 +27,4 @@ ASTNode* CreateValueNode ( ASTPool* astPool , ASTNodeType nodeType , const char*
 /// <param name="left">Pointer to the node at the left side.</param>
 /// <param name="right">Pointer to the node at the right side.</param>
 /// <returns>Pointer to the newly created ASTNode in the ASTPool.</returns>
-ASTNode* CreateOperatorNode ( ASTPool* astPool , ASTNodeType nodeType , const ASTNode* left , const ASTNode* right );
+ASTNode* CreateOperatorNode ( ASTPool* astPool , ASTNodeType nodeType , const ASTNode* left , const ASTNode* right , Position position );
