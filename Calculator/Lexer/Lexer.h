@@ -4,7 +4,7 @@
 #include "../LexerParserShared/Position.h"
 #include "SymbolBlock.h"
 
-//TODO add an initialize function that also includes InitSymbolsTable found in Symbol.h
+void InitLexer ( );
 
 /// <summary>
 /// Lexes data into TokenArray 
@@ -22,4 +22,4 @@ void Lex(char* dataPtr, Token* outTokens, size_t* outCount, int* error);
 /// <param name="outTokens">Tokens array (of size MAX_EXPRESSION_SIZE ) ; parsed Tokens are copied to this array.</param>
 /// <param name="outCount">Count of symbolblocks found will be outputed to this.</param>
 /// <param name="error">If error occurs during run , the value of error will be 1 ; otherwise 0.</param>
-void ReadTokens(SymbolBlockArr symbolBlockArr, Token* outTokens, size_t* outCount, int* error);
+int ReadTokens(SymbolBlockArr symbolBlockArr, Token* outTokens, size_t* outCount);

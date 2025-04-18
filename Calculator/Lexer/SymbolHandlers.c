@@ -2,39 +2,54 @@
 #include "NumberTokenProcessor.h"
 
 const SymbolHandler symbolHandlerTable[] = {
-	[DigitSymbol] = HandleNumberToken,
-	[DotSymbol] = HandleNumberToken,
-	[UnknownSymbol] = HandleUnknownSymbol,
-	[SeparatorSymbol] = HandleSeparator,
-	[NewLineSymbol] = HandleNewLine,
+    [DigitSymbol] = HandleNumberToken,
+    [DotSymbol] = HandleNumberToken,
+    [UnknownSymbol] = HandleUnknownSymbol,
+    [SeparatorSymbol] = HandleSeparator,
+    [NewLineSymbol] = HandleNewLine,
 };
 
-static void HandleNumberToken(SymbolBlockArr symbolBlockArr, size_t* currentIndex, Position* position, Token* outTokens, size_t* outCount, int* error)
+
+const SymbolHandler GetSymbolHandler(Symbol symbol)
 {
-	SymbolBlock* symbolBlocks = symbolBlockArr.symbolBlocks;
-	size_t symbolBlocksCount = symbolBlockArr.length;
-	NumberTokenResult result = ProcessNumberToken(symbolBlocks, symbolBlocksCount, *currentIndex);
-	outTokens[(*outCount)++] = result.token;
-	position->column += result.token.length;
-	*currentIndex = result.endPosition;
+    return symbolHandlerTable[symbol];
 }
 
-static void HandleUnknownSymbol(SymbolBlockArr symbolBlockArr, size_t* currentIndex, Position* position, Token* outTokens, size_t* outCount, int* error)
+void HandleSimpleTokens(TokenType tokenType, SymbolBlock symbolBlock, Position position, Token* outTokens, size_t* outCount)
 {
-	SymbolBlock currentSymbolBlock = symbolBlockArr.symbolBlocks[*currentIndex];
-	// @ERROR[Lexer]: Unknown Symbol found
-	PrintErrorf("Unknown Symbol found: '%c'", currentSymbolBlock.valuePtr);
-	*error = 1;
+    Token token = CreateToken(tokenType, symbolBlock.valuePtr, symbolBlock.length, position);
+    position.column += symbolBlock.length;
+    outTokens[(*outCount)++] = token;
 }
 
-static void HandleSeparator(SymbolBlockArr symbolBlockArr, size_t* currentIndex, Position* position, Token* outTokens, size_t* outCount, int* error)
+static int HandleNumberToken(SymbolBlockArr symbolBlockArr, size_t* currentIndex, Position* position, Token* outTokens, size_t* outCount)
 {
-	SymbolBlock currentSymbolBlock = symbolBlockArr.symbolBlocks[*currentIndex];
-	position->column += currentSymbolBlock.length;
+    SymbolBlock* symbolBlocks = symbolBlockArr.symbolBlocks;
+    size_t symbolBlocksCount = symbolBlockArr.length;
+    NumberTokenResult result = ProcessNumberToken(symbolBlocks, symbolBlocksCount, *currentIndex);
+    outTokens[(*outCount)++] = result.token;
+    position->column += result.token.length;
+    *currentIndex = result.endPosition;
+    return 0;
 }
 
-static void HandleNewLine(SymbolBlockArr symbolBlockArr, size_t* currentIndex, Position* position, Token* outTokens, size_t* outCount, int* error)
+static int HandleUnknownSymbol(SymbolBlockArr symbolBlockArr, size_t* currentIndex, Position* position, Token* outTokens, size_t* outCount)
 {
-	position->line++;
-	position->column = 1;
+    SymbolBlock currentSymbolBlock = symbolBlockArr.symbolBlocks[*currentIndex];
+    PrintErrorf("Unknown Symbol found: '%c'", currentSymbolBlock.valuePtr); // @Error[Lexer].
+    return 1;
+}
+
+static int HandleSeparator(SymbolBlockArr symbolBlockArr, size_t* currentIndex, Position* position, Token* outTokens, size_t* outCount)
+{
+    SymbolBlock currentSymbolBlock = symbolBlockArr.symbolBlocks[*currentIndex];
+    position->column += currentSymbolBlock.length;
+    return 0;
+}
+
+static int HandleNewLine(SymbolBlockArr symbolBlockArr, size_t* currentIndex, Position* position, Token* outTokens, size_t* outCount)
+{
+    position->line++;
+    position->column = 1;
+    return 0;
 }

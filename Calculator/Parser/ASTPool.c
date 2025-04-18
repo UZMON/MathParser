@@ -1,21 +1,21 @@
 #include "ASTPool.h"
 
-ASTNode* CreateValueNode(ASTPool* astPool, ASTNodeType nodeType, const char* valuePtr, size_t valueLength, Position position)
+ASTNode* CreateNode(ASTPool* astPool, ASTNodeType nodeType, Position position, int expressionDepth)
 {
-	ASTNode* node = &astPool->nodes[astPool->currentIndex++];
-	node->nodeType = nodeType;
-	node->value.valuePtr = valuePtr;
-	node->value.length = valueLength;
-	node->position = position;
-	return node;
+    ASTNode* node = &astPool->nodes[astPool->currentIndex++];
+    node->nodeType = nodeType;
+    node->position = position;
+    node->expressionDepth = expressionDepth;
+    return node;
 }
 
-ASTNode* CreateOperatorNode(ASTPool* astPool, ASTNodeType nodeType, const ASTNode* left, const ASTNode* right, Position position)
+ASTNode* CreateValueNode(ASTPool* astPool, ASTNodeType nodeType, const char* valuePtr, size_t valueLength, Position position, int expressionDepth)
 {
-	ASTNode* node = &astPool->nodes[astPool->currentIndex++];
-	node->nodeType = nodeType;
-	node->binary.leftChild = left;
-	node->binary.rightChild = right;
-	node->position = position;
-	return node;
+    ASTNode* node = &astPool->nodes[astPool->currentIndex++];
+    node->nodeType = nodeType;
+    node->value.valuePtr = valuePtr;
+    node->value.length = valueLength;
+    node->position = position;
+    node->expressionDepth = expressionDepth;
+    return node;
 }

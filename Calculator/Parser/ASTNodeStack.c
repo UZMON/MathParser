@@ -1,86 +1,121 @@
 #include "ASTNodeStack.h"
 #include "../Utils/ErrorPrinter.h"
+#include "../Utils/Macros.h"
 #include "Priority.h"
+#include <stdarg.h>
 
-void InitASTNodeStack(ASTNodeStack* stack)
+int PushASTNodes(ASTNodeStack* stack, int count, ...)
 {
-	stack->lastIndex = 0;
+    if (stack->nextIndex + count > MAX_AST_NODES_STACK) {
+        PrintErrorf("StackOverFlow: Cannot push %d more nodes (max %d).", count, MAX_AST_NODES_STACK); // @Error[ASTNodeStack].
+        return 1;
+    }
+    va_list args;
+    va_start(args, count);
+    for (int i = 0; i < count; i++) {
+        ASTNode* node = va_arg(args, ASTNode*);
+        stack->ASTNodes[stack->nextIndex++] = node;
+    }
+    va_end(args);
+    return 0;
 }
 
 int PushASTNode(ASTNodeStack* stack, ASTNode* node)
 {
-	if (stack->lastIndex >= MAX_AST_NODES_STACK)
-	{
-		// @ERROR[ASTNodeStack]: StackOverFlow.
-		PrintErrorf("StackOverFlow : ASTNodes Stack exceeds the Maximum %d", MAX_AST_NODES_STACK);
-		return 1;
-	}
-	stack->ASTNodes[stack->lastIndex++] = node;
-	 return 0;
+    if (stack->nextIndex >= MAX_AST_NODES_STACK) {
+        PrintErrorf("StackOverFlow : ASTNodes Stack exceeds the Maximum %d", MAX_AST_NODES_STACK); // @Error[ASTNodeStack].
+        return 1;
+    }
+    stack->ASTNodes[stack->nextIndex++] = node;
+    return 0;
+}
+
+int EmitNode(ASTPool* astPool, ASTNodeStack* stack, ASTNodeType nodeType, Position position, int expressionDepth)
+{
+    ASTNode* currentNode = CreateNode(astPool, nodeType, position, expressionDepth);
+    if (!PushASTNode(stack, currentNode)) {
+        return ReduceTheStack(stack);
+    }
+    return 1; //Error
+}
+
+int EmitTerminalNode(ASTPool* astPool, ASTNodeStack* stack, int expressionDepth)
+{
+    Position noPosition = { -1, -1 };
+
+    if (expressionDepth != 0) {
+        PrintErrorf("Mismatched parentheses: expected depth 0 but got %d", expressionDepth); //@Error[ASTNodeStack].
+        return 1;
+    }
+    
+    return EmitNode(astPool, stack, EndOfNodesNodeType, noPosition, expressionDepth);
 }
 
 ASTNode* PopASTStack(ASTNodeStack* stack)
 {
-	if (stack->lastIndex == 0)
-	{
-		return NULL;
-	}
-	return stack->ASTNodes[-- stack->lastIndex ];
+    if (stack->nextIndex == 0) {
+        return NULL;
+    }
+    return stack->ASTNodes[--stack->nextIndex];
 }
 
 ASTNode* PeekASTStack(ASTNodeStack* stack)
 {
-	if (stack->lastIndex == 0)
-	{
-		return NULL;
-	}
-	return stack->ASTNodes[stack->lastIndex - 1];
+    if (stack->nextIndex == 0) {
+        return NULL;
+    }
+    return stack->ASTNodes[stack->nextIndex - 1];
+}
+
+static int StackEmptyCase(ASTNodeStack* AST_Stack, ASTNode* topNode)
+{
+    if (isLeftAttachable(topNode->nodeType) && topNode->binary.leftChild == NULL) {
+        PrintErrorf("Expected a left value for the operator at ( %d, %d )", topNode->position.line, topNode->position.column); // @Error[ASTNodeStack].
+        return 1;
+    }
+    return PushASTNode(AST_Stack, topNode); // Nothing to reduce; push back topNode.
+}
+
+static int AttachSecondNodeToTopNode(ASTNodeStack* AST_Stack, ASTNode* topNode, ASTNode* secondNode)
+{
+    if (topNode->nodeType == EndOfNodesNodeType)
+        return PushASTNode(AST_Stack, secondNode); // If the topNode is the endNode we remove it from stack , and we keep second node.
+    topNode->binary.leftChild = secondNode;
+    return PushASTNode(AST_Stack, topNode);
+}
+
+
+//  Note :
+//		It is obligatory by this logic that any node inside the stack ( other than the top node !! ) closer to the topNode will always have higher priority than the ones far away
+//Return 0 for success , 1 for error , 2  if the stack might still be reducable.
+static int ReduceTheStack_OneStep(ASTNodeStack* AST_Stack)
+{
+    ASTNode* topNode = PopASTStack(AST_Stack);
+    ASTNode* secondNode = PopASTStack(AST_Stack);
+    ASTNode* thirdNode = PeekASTStack(AST_Stack); // Don't pop this yet.
+    // Case 1: Stack only contains topNode
+    if (!Exists(secondNode)) {
+        return StackEmptyCase(AST_Stack, topNode);
+    }
+    // Case 2: thirdNode exists and has higher or equal priority than topNode
+    if (Exists(thirdNode) && HasHigherOrEqualPriority(thirdNode, topNode)) { // P(third) >= P(top)
+        thirdNode->binary.rightChild = secondNode;
+        PushASTNode(AST_Stack, topNode);
+        return 2; // We jump back to reduce further since the stack may allow more reductions.
+    }
+    // Case 3: secondNode has higher or equal priority than topNode
+    if (HasHigherOrEqualPriority(secondNode, topNode)) { // P(second) >= P(top)
+        return AttachSecondNodeToTopNode(AST_Stack, topNode, secondNode);
+    }
+    // Case 4: Cannot reduce any further.
+    return PushASTNodes(AST_Stack, 2, secondNode, topNode);
 }
 
 int ReduceTheStack(ASTNodeStack* AST_Stack)
 {
-	ASTNode* topNode = NULL;
-	ASTNode* secondNode = NULL;
-	ASTNode* thirdNode = NULL;
-
-start:
-	topNode = PopASTStack(AST_Stack);
-	secondNode = PopASTStack(AST_Stack);
-	thirdNode = PeekASTStack(AST_Stack); // Don't pop this yet.
-
-	// Case 1: Stack only contains topNode
-	if (!Exists(secondNode))
-	{
-		if (isLeftAttachable(topNode->nodeType) && topNode->binary.leftChild == NULL)
-		{
-			// @Error[ASTNodeStack]: Expected a left value for the operator.
-			PrintErrorf("Expected a left value for the operator at ( %d, %d )", topNode->position.line, topNode->position.column);
-			return 1;
-		}
-		// Nothing else to reduce; push back topNode.
-		PushASTNode(AST_Stack, topNode);
-		return 0;
-	}
-
-	// Case 2: thirdNode exists and has higher or equal priority than topNode
-	if (Exists(thirdNode) && Priority_MoreThanOrEqual(thirdNode->nodeType, topNode->nodeType)) // P(third) >= P(top)
-	{
-		thirdNode->binary.rightChild = secondNode;
-		PushASTNode(AST_Stack, topNode);
-		// We jump back to reduce further since the stack may allow more reductions.
-		goto start;
-	}
-
-	// Case 3: secondNode has higher or equal priority than topNode
-	if (Priority_MoreThanOrEqual(secondNode->nodeType, topNode->nodeType)) // P(second) >= P(top)
-	{
-		topNode->binary.leftChild = secondNode;
-		PushASTNode(AST_Stack, topNode);
-		return 0;
-	}
-
-	// Case 4: Cannot reduce any further.
-	PushASTNode(AST_Stack, secondNode);
-	PushASTNode(AST_Stack, topNode);
-	return 0;
+    while (true) { // Keep reducing until no more reductions are possible
+        int result = ReduceTheStack_OneStep(AST_Stack);
+        if (result != 2)
+            return result;
+    }
 }

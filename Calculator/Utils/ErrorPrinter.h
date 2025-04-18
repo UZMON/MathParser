@@ -1,4 +1,5 @@
 #pragma once
+
 void PrintErrorf(const char* fmt, ...);
 
 #define PRINT_ON_ALLOC_FAIL(ptr, type, count) \

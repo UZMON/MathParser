@@ -1,8 +1,9 @@
+#include "ErrorPrinter.h"
 #include <stdarg.h>
 #include <stdio.h>
-#include "ErrorPrinter.h"
 
-void PrintErrorf(const char* fmt, ...) {
+void PrintErrorf(const char* fmt, ...)
+{
     va_list args;
     va_start(args, fmt);
     fprintf(stderr, "Error: ");

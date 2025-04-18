@@ -72,6 +72,9 @@
     <ClCompile Include="Parser\Priority.c">
       <Filter>Source Files\Parser</Filter>
     </ClCompile>
+    <ClCompile Include="Parser\TokenHandlers.c">
+      <Filter>Source Files\Parser</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Constants.h">
@@ -117,6 +120,9 @@
       <Filter>Header Files\Lexer</Filter>
     </ClInclude>
     <ClInclude Include="Parser\Priority.h">
+      <Filter>Header Files\Parser</Filter>
+    </ClInclude>
+    <ClInclude Include="Parser\TokenHandlers.h">
       <Filter>Header Files\Parser</Filter>
     </ClInclude>
   </ItemGroup>

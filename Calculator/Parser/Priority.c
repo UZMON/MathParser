@@ -1,28 +1,38 @@
 #include "Priority.h"
 
-int Priority_MoreThan(ASTNodeType leftValue, ASTNodeType rightValue)
+int HasHigherPriority(ASTNode* a, ASTNode* b)
 {
-	//Lower Precedence => Higher Priority.
-	return GetNodePrecedence(leftValue) < GetNodePrecedence(rightValue);
+    // Nodes with higher expression depth have higher priority.
+    int hasDeeperNesting = a->expressionDepth > b->expressionDepth;
+
+    // At the same depth, nodes with lower precedence value bind tighter => Higher priority.
+    int hasTighterBinding = GetNodePrecedence(a->nodeType) < GetNodePrecedence(b->nodeType);
+
+    return hasDeeperNesting || (a->expressionDepth == b->expressionDepth && hasTighterBinding);
 }
 
-int Priority_LessThan(ASTNodeType leftValue, ASTNodeType rightValue)
+int HasLowerPriority(ASTNode* a, ASTNode* b)
 {
-	//Higher Precedence => Lowe Priority.
-	return GetNodePrecedence(leftValue) > GetNodePrecedence(rightValue);
+    // Nodes with lower expression depth have lower priority.
+    int isShallower = a->expressionDepth < b->expressionDepth;
+
+    // At the same depth, nodes with higher precedence value bind looser => lower priority.
+    int bindsLooser = GetNodePrecedence(a->nodeType) > GetNodePrecedence(b->nodeType);
+
+    return isShallower || (a->expressionDepth == b->expressionDepth && bindsLooser);
 }
 
-int Priority_Equal(ASTNodeType leftValue, ASTNodeType rightValue)
+int HasEqualPriority(ASTNode* a, ASTNode* b)
 {
-	return GetNodePrecedence(leftValue) == GetNodePrecedence(rightValue);
+    return (a->expressionDepth == b->expressionDepth) && (GetNodePrecedence(a->nodeType) == GetNodePrecedence(b->nodeType));
 }
 
-int Priority_MoreThanOrEqual(ASTNodeType leftValue, ASTNodeType rightValue)
+int HasHigherOrEqualPriority(ASTNode* a, ASTNode* b)
 {
-	return Priority_MoreThan(leftValue, rightValue) || Priority_Equal(leftValue, rightValue);
+    return HasHigherPriority(a, b) || HasEqualPriority(a, b);
 }
 
-int Priority_LessThanOrEqual(ASTNodeType leftValue, ASTNodeType rightValue)
+int HasLowerOrEqualPriority(ASTNode* a, ASTNode* b)
 {
-	return Priority_LessThan(leftValue, rightValue) || Priority_Equal(leftValue, rightValue);
+    return HasLowerPriority(a, b) || HasEqualPriority(a, b);
 }

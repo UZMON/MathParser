@@ -1,59 +1,53 @@
+#include "Lexer.h"
+
 #include <stdlib.h>
 #include <string.h>
-#include "Lexer.h"
-#include "SymbolHandlers.h"
-#include "../Utils/ErrorPrinter.h"
-#include "SymbolBlock.h"
+
 #include "../Constants.h"
+#include "../Utils/ErrorPrinter.h"
+#include "../Utils/Macros.h"
+#include "SymbolBlock.h"
+#include "SymbolHandlers.h"
+
+void InitLexer() { InitSymbolsTable(); }
 
 void Lex(char* dataPtr, Token* outTokens, size_t* outCount, int* error)
 {
-	*error = 0;
+    *error = 0;
 
-	SymbolBlock SymbolBlocks[MAX_EXPRESSION_SIZE];
-	size_t symbolBlocksCount = 0;
-	ReadSymbolBlocks(dataPtr , SymbolBlocks , &symbolBlocksCount);
+    SymbolBlock SymbolBlocks[MAX_EXPRESSION_SIZE];
+    size_t symbolBlocksCount = 0;
+    ReadAllSymbolBlocks(dataPtr, SymbolBlocks, &symbolBlocksCount);
 
-	Token tokens[MAX_EXPRESSION_SIZE] = {0};
-	SymbolBlockArr symbolBlockArr = { SymbolBlocks , symbolBlocksCount };
-	ReadTokens(symbolBlockArr , outTokens , outCount , error);
+    Token tokens[MAX_EXPRESSION_SIZE] = { 0 };
+    SymbolBlockArr symbolBlockArr = { SymbolBlocks, symbolBlocksCount };
+    ReadTokens(symbolBlockArr, outTokens, outCount, error);
 }
 
-void ReadTokens(SymbolBlockArr symbolBlockArr, Token* outTokens, size_t* outCount, int* error)
+int ReadTokens(SymbolBlockArr symbolBlockArr, Token* outTokens, size_t* outCount)
 {
-	*error = 0;
-	*outCount = 0;
-	Position position = { 1 , 1 }; // Line : 1 , Column : 1 
-	SymbolBlock* symbolBlocks = symbolBlockArr.symbolBlocks;
-	size_t symbolBlocksCount = symbolBlockArr.length;
-	
-	for (size_t i = 0; i < symbolBlocksCount; i++)
-	{
-		SymbolBlock currentSymbolBlock = symbolBlocks[i];
-		Symbol currentSymbol = currentSymbolBlock.symbol;
-		TokenType mappedTokenType = SymbolTokenTable[currentSymbol];
+    *outCount = 0;
+    Position position = { 1, 1 }; // Line : 1 , Column : 1
+    SymbolBlock* symbolBlocks = symbolBlockArr.symbolBlocks;
+    size_t symbolBlocksCount = symbolBlockArr.length;
 
-		// Handle special symbols with custom token logic
-		if (mappedTokenType == SpecialToken)
-		{
-			SymbolHandler symbolHandler = symbolHandlerTable[currentSymbol];
-			
-			if(!symbolHandler)
-			{
-				// @ERROR[Lexer]: No suitable Token for symbol
-				PrintErrorf("Can't find suitable Token for %s", SymbolNameTable[currentSymbol]);
-				*error = 1;
-				return;
-			}
+    for (size_t i = 0; i < symbolBlocksCount; i++) {
+        SymbolBlock currentSymbolBlock = symbolBlocks[i];
+        Symbol currentSymbol = currentSymbolBlock.symbol;
+        TokenType mappedTokenType = GetSymbolTokenType(currentSymbol);
 
-			symbolHandler(symbolBlockArr, &i, &position, outTokens, outCount, error);
-			if (*error) return;
-			continue;
-		}
-
-		// Handle all simple symbols (operators, identifiers, parentheses, etc.)
-		Token token = CreateToken(mappedTokenType, currentSymbolBlock.valuePtr, currentSymbolBlock.length, position);
-		position.column += currentSymbolBlock.length;
-		outTokens[(*outCount)++] = token;
-	}
+        // Handle special symbols with custom token logic
+        if (mappedTokenType == SpecialToken) {
+            SymbolHandler handler = GetSymbolHandler(currentSymbol);
+            if (!handler) {
+                PrintErrorf("Can't find suitable Token for %s", GetSymbolName(currentSymbol)); // @Error[Lexer].
+                return 1;
+            }
+            if (handler(symbolBlockArr, &i, &position, outTokens, outCount)) // Run Symbol Handler
+                return 1; // error
+            continue;
+        }
+        HandleSimpleTokens(mappedTokenType, currentSymbolBlock, position, outTokens, outCount); // e.g. operators, parentheses, etc.
+    }
+    return 0;
 }

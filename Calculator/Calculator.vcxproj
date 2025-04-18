@@ -139,6 +139,7 @@
     <ClCompile Include="Parser\ASTPool.c" />
     <ClCompile Include="Parser\Parser.c" />
     <ClCompile Include="Parser\Priority.c" />
+    <ClCompile Include="Parser\TokenHandlers.c" />
     <ClCompile Include="Utils\ErrorPrinter.c" />
   </ItemGroup>
   <ItemGroup>
@@ -155,6 +156,7 @@
     <ClInclude Include="Parser\ASTPool.h" />
     <ClInclude Include="Parser\Parser.h" />
     <ClInclude Include="Parser\Priority.h" />
+    <ClInclude Include="Parser\TokenHandlers.h" />
     <ClInclude Include="Utils\ErrorPrinter.h" />
     <ClInclude Include="Utils\Macros.h" />
   </ItemGroup>

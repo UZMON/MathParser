@@ -2,22 +2,22 @@
 #include "ASTNode.h"
 
 
-// Priority(leftValue) > Priority(rightValue)
+// Priority(a) > Priority(b)
 //Returns 1 for true , 0 for false
-int Priority_MoreThan ( ASTNodeType leftValue , ASTNodeType rightValue );
+int HasHigherPriority ( ASTNode* a , ASTNode* b );
 
-// Priority(leftValue) < Priority(rightValue)
+// Priority(a) < Priority(b)
 //Returns 1 for true , 0 for false
-int Priority_LessThan ( ASTNodeType leftValue , ASTNodeType rightValue );
+int HasLowerPriority ( ASTNode* a , ASTNode* b );
 
-// Priority(leftValue) == Priority(rightValue)
+// Priority(a) == Priority(b)
 //Returns 1 for true , 0 for false
-int Priority_Equal ( ASTNodeType leftValue , ASTNodeType rightValue );
+int HasEqualPriority ( ASTNode* a , ASTNode* b );
 
-// Priority(leftValue) >= Priority(rightValue)
+// Priority(a) >= Priority(b)
 //Returns 1 for true , 0 for false
-int Priority_MoreThanOrEqual ( ASTNodeType leftValue , ASTNodeType rightValue );
+int HasHigherOrEqualPriority ( ASTNode* a , ASTNode* b );
 
-// Priority(leftValue) <= Priority(rightValue)
+// Priority(a) <= Priority(b)
 //Returns 1 for true , 0 for false
-int Priority_LessThanOrEqual ( ASTNodeType leftValue , ASTNodeType rightValue );
+int HasLowerOrEqualPriority ( ASTNode* a , ASTNode* b );

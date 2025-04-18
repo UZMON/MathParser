@@ -1,1 +1,0 @@
-- TODO add Lookup(getters) functions for all tables

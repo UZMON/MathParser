@@ -1,55 +1,57 @@
-#include <string.h>
-#include <math.h>
 #include "SymbolBlock.h"
+#include <math.h>
+#include <string.h>
 
-const size_t SymbolBlockMaximumLength[SymbolsCount] = {
-	#define SYMBOL(SymbolName,SymbolCharacters,SymbolBlockMax,tokenType)  \
-		[SymbolName##Symbol] = SymbolBlockMax, 
-		SymbolsList
-	#undef SYMBOL
-		/*Expands to :
-			[UnknownSymbol] = 1,
-			[NumberSymbol] = 100,
-			...etc
-		*/
+const size_t symbolBlockMaximumLengthTable[SymbolsCount] = {
+#define SYMBOL(SymbolName, SymbolCharacters, SymbolBlockMax, tokenType) \
+    [SymbolName##Symbol] = SymbolBlockMax,
+    SymbolsList
+#undef SYMBOL
+    /*Expands to :
+            [UnknownSymbol] = 1,
+            [NumberSymbol] = 100,
+            ...etc
+    */
 };
+
+const size_t GetSymbolMaximumLength(Symbol symbol)
+{
+    return symbolBlockMaximumLengthTable[symbol];
+}
 
 SymbolBlock ReadSymbolBlock(char* dataPtr, Symbol wantedSymbol)
 {
-	size_t length = strlen(dataPtr);
-	size_t CurrentSymbolBlockMaxLength = SymbolBlockMaximumLength[wantedSymbol];
-	SymbolBlock CurrentSymbolBlock = { wantedSymbol, dataPtr, 0 };
-	// A SymbolBlock is created by incrementing its length for every matching character.
-	for (int i = 0; i < length; i++)
-	{
-		char CurrentCharacter = dataPtr[i];
-		Symbol CurrentTokenSymbol = GetSymbol(CurrentCharacter);
-		// The block ends when:
-		//   - A character maps to a different symbol, or
-		//   - The block reaches its maximum allowed length (based on wantedSymbol).
-		if (CurrentTokenSymbol != wantedSymbol || CurrentSymbolBlock.length == CurrentSymbolBlockMaxLength)
-		{
-			break;
-		}
-		CurrentSymbolBlock.length++;
-	}
-	return CurrentSymbolBlock;
+    size_t length = strlen(dataPtr);
+    size_t CurrentSymbolBlockMaxLength = GetSymbolMaximumLength(wantedSymbol);
+    SymbolBlock CurrentSymbolBlock = { wantedSymbol, dataPtr, 0 };
+    // A SymbolBlock is created by incrementing its length for every matching character.
+    for (int i = 0; i < length; i++) {
+        char CurrentCharacter = dataPtr[i];
+        Symbol CurrentTokenSymbol = GetSymbol(CurrentCharacter);
+        // The block ends when:
+        //   - A character maps to a different symbol, or
+        //   - The block reaches its maximum allowed length (based on wantedSymbol).
+        if (CurrentTokenSymbol != wantedSymbol || CurrentSymbolBlock.length == CurrentSymbolBlockMaxLength) {
+            break;
+        }
+        CurrentSymbolBlock.length++;
+    }
+    return CurrentSymbolBlock;
 }
 
-void ReadSymbolBlocks(const char* dataPtr, SymbolBlock* outSymbolBlocks, size_t* outCount)
+void ReadAllSymbolBlocks(const char* dataPtr, SymbolBlock* outSymbolBlocks, size_t* outCount)
 {
-	size_t length = strlen(dataPtr);
-	size_t symbolBlocksCount = 0;
+    size_t length = strlen(dataPtr);
+    size_t symbolBlocksCount = 0;
 
-	for (size_t i = 0; i < length;)
-	{
-		char currentCharacter = dataPtr[i];
-		Symbol currentSymbol = GetSymbol(currentCharacter);
-		SymbolBlock currentToken = ReadSymbolBlock(dataPtr + i, currentSymbol);
-		outSymbolBlocks[symbolBlocksCount] = currentToken;
-		symbolBlocksCount++;
-		i += currentToken.length;
-	}
+    for (size_t i = 0; i < length;) {
+        char currentCharacter = dataPtr[i];
+        Symbol currentSymbol = GetSymbol(currentCharacter);
+        SymbolBlock currentToken = ReadSymbolBlock(dataPtr + i, currentSymbol);
+        outSymbolBlocks[symbolBlocksCount] = currentToken;
+        symbolBlocksCount++;
+        i += currentToken.length;
+    }
 
-	*outCount = symbolBlocksCount;
+    *outCount = symbolBlocksCount;
 }
