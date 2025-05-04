@@ -67,27 +67,18 @@ ASTNode* PeekASTStack(ASTNodeStack* stack)
     return stack->ASTNodes[stack->nextIndex - 1];
 }
 
-static int StackEmptyCase(ASTNodeStack* AST_Stack, ASTNode* topNode)
+int ReduceTheStack(ASTNodeStack* AST_Stack)
 {
-    if (isLeftAttachable(topNode->nodeType) && topNode->binary.leftChild == NULL) {
-        PrintErrorf("Expected a left value for the operator at ( %d, %d )", topNode->position.line, topNode->position.column); // @Error[ASTNodeStack].
-        return 1;
+    while (true) { // Keep reducing until no more reductions are possible
+        int result = ReduceTheStack_OneStep(AST_Stack);
+        if (result != 2)
+            return result;
     }
-    return PushASTNode(AST_Stack, topNode); // Nothing to reduce; push back topNode.
 }
-
-static int AttachSecondNodeToTopNode(ASTNodeStack* AST_Stack, ASTNode* topNode, ASTNode* secondNode)
-{
-    if (topNode->nodeType == EndOfNodesNodeType)
-        return PushASTNode(AST_Stack, secondNode); // If the topNode is the endNode we remove it from stack , and we keep second node.
-    topNode->binary.leftChild = secondNode;
-    return PushASTNode(AST_Stack, topNode);
-}
-
 
 //  Note :
 //		It is obligatory by this logic that any node inside the stack ( other than the top node !! ) closer to the topNode will always have higher priority than the ones far away
-//Return 0 for success , 1 for error , 2  if the stack might still be reducable.
+// Return 0 for success , 1 for error , 2  if the stack might still be reducable.
 static int ReduceTheStack_OneStep(ASTNodeStack* AST_Stack)
 {
     ASTNode* topNode = PopASTStack(AST_Stack);
@@ -111,11 +102,19 @@ static int ReduceTheStack_OneStep(ASTNodeStack* AST_Stack)
     return PushASTNodes(AST_Stack, 2, secondNode, topNode);
 }
 
-int ReduceTheStack(ASTNodeStack* AST_Stack)
+static int StackEmptyCase(ASTNodeStack* AST_Stack, ASTNode* topNode)
 {
-    while (true) { // Keep reducing until no more reductions are possible
-        int result = ReduceTheStack_OneStep(AST_Stack);
-        if (result != 2)
-            return result;
+    if (isLeftAttachable(topNode->nodeType) && topNode->binary.leftChild == NULL) {
+        PrintErrorf("Expected a left value for the operator at ( %d, %d )", topNode->position.line, topNode->position.column); // @Error[ASTNodeStack].
+        return 1;
     }
+    return PushASTNode(AST_Stack, topNode); // Nothing to reduce; push back topNode.
+}
+
+static int AttachSecondNodeToTopNode(ASTNodeStack* AST_Stack, ASTNode* topNode, ASTNode* secondNode)
+{
+    if (topNode->nodeType == EndOfNodesNodeType)
+        return PushASTNode(AST_Stack, secondNode); // If the topNode is the endNode we remove it from stack , and we keep second node.
+    topNode->binary.leftChild = secondNode;
+    return PushASTNode(AST_Stack, topNode);
 }
