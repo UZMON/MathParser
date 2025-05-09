@@ -29,6 +29,7 @@
 	TOKEN(MultiplicationOperator, MultiplicationNodeType,   OperatorTokenCategory)  \
 	TOKEN(DivisionOperator,       DivisionNodeType,         OperatorTokenCategory)  \
 	TOKEN(RemainderOperator,      RemainderNodeType,        OperatorTokenCategory)  \
+	TOKEN(PowerOperator,		  PowerNodeType,        OperatorTokenCategory)  \
 	/* Bracket Tokens */ \
 	TOKEN(OpenedBracket,          NoneNodeType,             BracketTokenCategory)   \
 	TOKEN(ClosedBracket,          NoneNodeType,             BracketTokenCategory)   \
