@@ -19,3 +19,11 @@ ASTNode* CreateValueNode(ASTPool* astPool, ASTNodeType nodeType, const char* val
     node->expressionDepth = expressionDepth;
     return node;
 }
+
+ASTNode* CreateNoneNode(ASTPool* astPool, int expressionDepth)
+{
+    ASTNode* node = &astPool->nodes[astPool->currentIndex++];
+    node->nodeType = NoneNodeType;
+    node->expressionDepth = expressionDepth;
+    return node;
+}

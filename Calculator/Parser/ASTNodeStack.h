@@ -29,4 +29,4 @@ ASTNode* PopASTStack ( ASTNodeStack* stack );
 //Returns the ASTNode Ptr , or NULL if the stack is empty.
 ASTNode* PeekASTStack ( ASTNodeStack* stack );
 
-int ReduceTheStack ( ASTNodeStack* AST_Stack );
+int ReduceTheStack(ASTPool* astPool, ASTNodeStack* AST_Stack, int expressionDepth);

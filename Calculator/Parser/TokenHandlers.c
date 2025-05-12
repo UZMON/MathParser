@@ -16,7 +16,7 @@ int HandleValue(ASTPool* AST_Pool, ASTNodeStack* AST_Stack, TokenArray tokenArr,
     ASTNodeType nodeType = GetTokenNodeType(token.tokenType);
     ASTNode* valueNode = CreateValueNode(AST_Pool, nodeType, token.valuePtr, token.length, token.position, *expressionDepth);
     PushASTNode(AST_Stack, valueNode);
-    ReduceTheStack(AST_Stack);
+    ReduceTheStack(AST_Pool, AST_Stack, expressionDepth);
     return 0;
 }
 
