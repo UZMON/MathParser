@@ -25,6 +25,7 @@
     SYMBOL(MultiplicationOperator,"*",          1,   MultiplicationOperatorToken) \
     SYMBOL(DivisionOperator,      "/",          1,   DivisionOperatorToken) \
     SYMBOL(RemainderOperator,     "%",          1,   RemainderOperatorToken) \
+    SYMBOL(PowerOperator,         "^",          1,   PowerOperatorToken) \
     SYMBOL(OpenedBracket,         BRACKETS_OPEN,         1,   OpenedBracketToken) \
     SYMBOL(ClosedBracket,          BRACKETS_CLOSE,         1,   ClosedBracketToken) \
     SYMBOL(Separator,                 WHITESPACE,    100, SpecialToken) \
