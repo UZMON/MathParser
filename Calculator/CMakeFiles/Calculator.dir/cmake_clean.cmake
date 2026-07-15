@@ -1,0 +1,43 @@
+file(REMOVE_RECURSE
+  "CMakeFiles/Calculator.dir/Calculate/Calculate.c.o"
+  "CMakeFiles/Calculator.dir/Calculate/Calculate.c.o.d"
+  "CMakeFiles/Calculator.dir/Calculate/Math.c.o"
+  "CMakeFiles/Calculator.dir/Calculate/Math.c.o.d"
+  "CMakeFiles/Calculator.dir/Calculate/Number.c.o"
+  "CMakeFiles/Calculator.dir/Calculate/Number.c.o.d"
+  "CMakeFiles/Calculator.dir/Lexer/Lexer.c.o"
+  "CMakeFiles/Calculator.dir/Lexer/Lexer.c.o.d"
+  "CMakeFiles/Calculator.dir/Lexer/NumberTokenProcessor.c.o"
+  "CMakeFiles/Calculator.dir/Lexer/NumberTokenProcessor.c.o.d"
+  "CMakeFiles/Calculator.dir/Lexer/Symbol.c.o"
+  "CMakeFiles/Calculator.dir/Lexer/Symbol.c.o.d"
+  "CMakeFiles/Calculator.dir/Lexer/SymbolBlock.c.o"
+  "CMakeFiles/Calculator.dir/Lexer/SymbolBlock.c.o.d"
+  "CMakeFiles/Calculator.dir/Lexer/SymbolHandlers.c.o"
+  "CMakeFiles/Calculator.dir/Lexer/SymbolHandlers.c.o.d"
+  "CMakeFiles/Calculator.dir/LexerParserShared/Token.c.o"
+  "CMakeFiles/Calculator.dir/LexerParserShared/Token.c.o.d"
+  "CMakeFiles/Calculator.dir/Parser/ASTNode.c.o"
+  "CMakeFiles/Calculator.dir/Parser/ASTNode.c.o.d"
+  "CMakeFiles/Calculator.dir/Parser/ASTNodeStack.c.o"
+  "CMakeFiles/Calculator.dir/Parser/ASTNodeStack.c.o.d"
+  "CMakeFiles/Calculator.dir/Parser/ASTPool.c.o"
+  "CMakeFiles/Calculator.dir/Parser/ASTPool.c.o.d"
+  "CMakeFiles/Calculator.dir/Parser/Parser.c.o"
+  "CMakeFiles/Calculator.dir/Parser/Parser.c.o.d"
+  "CMakeFiles/Calculator.dir/Parser/Priority.c.o"
+  "CMakeFiles/Calculator.dir/Parser/Priority.c.o.d"
+  "CMakeFiles/Calculator.dir/Parser/TokenHandlers.c.o"
+  "CMakeFiles/Calculator.dir/Parser/TokenHandlers.c.o.d"
+  "CMakeFiles/Calculator.dir/Utils/ErrorPrinter.c.o"
+  "CMakeFiles/Calculator.dir/Utils/ErrorPrinter.c.o.d"
+  "CMakeFiles/Calculator.dir/main.c.o"
+  "CMakeFiles/Calculator.dir/main.c.o.d"
+  "Calculator"
+  "Calculator.pdb"
+)
+
+# Per-language clean rules from dependency scanning.
+foreach(lang C)
+  include(CMakeFiles/Calculator.dir/cmake_clean_${lang}.cmake OPTIONAL)
+endforeach()

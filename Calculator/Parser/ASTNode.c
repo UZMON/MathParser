@@ -59,3 +59,8 @@ int isRightAttachable(ASTNodeType nodeType)
         return 0;
     return 1;
 }
+
+int isUnaryCapable(ASTNodeType nodeType)
+{
+    return nodeType == AdditionNodeType || nodeType == SubtractionNodeType;
+}

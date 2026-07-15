@@ -1,0 +1,104 @@
+[
+{
+  "directory": "/home/ahmad/Documents/C/Calculator/Calculator/build",
+  "command": "/usr/bin/gcc -g -std=gnu11 -o CMakeFiles/Calculator.dir/main.c.o -c /home/ahmad/Documents/C/Calculator/Calculator/main.c",
+  "file": "/home/ahmad/Documents/C/Calculator/Calculator/main.c",
+  "output": "CMakeFiles/Calculator.dir/main.c.o"
+},
+{
+  "directory": "/home/ahmad/Documents/C/Calculator/Calculator/build",
+  "command": "/usr/bin/gcc -g -std=gnu11 -o CMakeFiles/Calculator.dir/Lexer/Lexer.c.o -c /home/ahmad/Documents/C/Calculator/Calculator/Lexer/Lexer.c",
+  "file": "/home/ahmad/Documents/C/Calculator/Calculator/Lexer/Lexer.c",
+  "output": "CMakeFiles/Calculator.dir/Lexer/Lexer.c.o"
+},
+{
+  "directory": "/home/ahmad/Documents/C/Calculator/Calculator/build",
+  "command": "/usr/bin/gcc -g -std=gnu11 -o CMakeFiles/Calculator.dir/Lexer/NumberTokenProcessor.c.o -c /home/ahmad/Documents/C/Calculator/Calculator/Lexer/NumberTokenProcessor.c",
+  "file": "/home/ahmad/Documents/C/Calculator/Calculator/Lexer/NumberTokenProcessor.c",
+  "output": "CMakeFiles/Calculator.dir/Lexer/NumberTokenProcessor.c.o"
+},
+{
+  "directory": "/home/ahmad/Documents/C/Calculator/Calculator/build",
+  "command": "/usr/bin/gcc -g -std=gnu11 -o CMakeFiles/Calculator.dir/Lexer/Symbol.c.o -c /home/ahmad/Documents/C/Calculator/Calculator/Lexer/Symbol.c",
+  "file": "/home/ahmad/Documents/C/Calculator/Calculator/Lexer/Symbol.c",
+  "output": "CMakeFiles/Calculator.dir/Lexer/Symbol.c.o"
+},
+{
+  "directory": "/home/ahmad/Documents/C/Calculator/Calculator/build",
+  "command": "/usr/bin/gcc -g -std=gnu11 -o CMakeFiles/Calculator.dir/Lexer/SymbolBlock.c.o -c /home/ahmad/Documents/C/Calculator/Calculator/Lexer/SymbolBlock.c",
+  "file": "/home/ahmad/Documents/C/Calculator/Calculator/Lexer/SymbolBlock.c",
+  "output": "CMakeFiles/Calculator.dir/Lexer/SymbolBlock.c.o"
+},
+{
+  "directory": "/home/ahmad/Documents/C/Calculator/Calculator/build",
+  "command": "/usr/bin/gcc -g -std=gnu11 -o CMakeFiles/Calculator.dir/Lexer/SymbolHandlers.c.o -c /home/ahmad/Documents/C/Calculator/Calculator/Lexer/SymbolHandlers.c",
+  "file": "/home/ahmad/Documents/C/Calculator/Calculator/Lexer/SymbolHandlers.c",
+  "output": "CMakeFiles/Calculator.dir/Lexer/SymbolHandlers.c.o"
+},
+{
+  "directory": "/home/ahmad/Documents/C/Calculator/Calculator/build",
+  "command": "/usr/bin/gcc -g -std=gnu11 -o CMakeFiles/Calculator.dir/Parser/ASTNode.c.o -c /home/ahmad/Documents/C/Calculator/Calculator/Parser/ASTNode.c",
+  "file": "/home/ahmad/Documents/C/Calculator/Calculator/Parser/ASTNode.c",
+  "output": "CMakeFiles/Calculator.dir/Parser/ASTNode.c.o"
+},
+{
+  "directory": "/home/ahmad/Documents/C/Calculator/Calculator/build",
+  "command": "/usr/bin/gcc -g -std=gnu11 -o CMakeFiles/Calculator.dir/Parser/ASTNodeStack.c.o -c /home/ahmad/Documents/C/Calculator/Calculator/Parser/ASTNodeStack.c",
+  "file": "/home/ahmad/Documents/C/Calculator/Calculator/Parser/ASTNodeStack.c",
+  "output": "CMakeFiles/Calculator.dir/Parser/ASTNodeStack.c.o"
+},
+{
+  "directory": "/home/ahmad/Documents/C/Calculator/Calculator/build",
+  "command": "/usr/bin/gcc -g -std=gnu11 -o CMakeFiles/Calculator.dir/Parser/ASTPool.c.o -c /home/ahmad/Documents/C/Calculator/Calculator/Parser/ASTPool.c",
+  "file": "/home/ahmad/Documents/C/Calculator/Calculator/Parser/ASTPool.c",
+  "output": "CMakeFiles/Calculator.dir/Parser/ASTPool.c.o"
+},
+{
+  "directory": "/home/ahmad/Documents/C/Calculator/Calculator/build",
+  "command": "/usr/bin/gcc -g -std=gnu11 -o CMakeFiles/Calculator.dir/Parser/Parser.c.o -c /home/ahmad/Documents/C/Calculator/Calculator/Parser/Parser.c",
+  "file": "/home/ahmad/Documents/C/Calculator/Calculator/Parser/Parser.c",
+  "output": "CMakeFiles/Calculator.dir/Parser/Parser.c.o"
+},
+{
+  "directory": "/home/ahmad/Documents/C/Calculator/Calculator/build",
+  "command": "/usr/bin/gcc -g -std=gnu11 -o CMakeFiles/Calculator.dir/Parser/Priority.c.o -c /home/ahmad/Documents/C/Calculator/Calculator/Parser/Priority.c",
+  "file": "/home/ahmad/Documents/C/Calculator/Calculator/Parser/Priority.c",
+  "output": "CMakeFiles/Calculator.dir/Parser/Priority.c.o"
+},
+{
+  "directory": "/home/ahmad/Documents/C/Calculator/Calculator/build",
+  "command": "/usr/bin/gcc -g -std=gnu11 -o CMakeFiles/Calculator.dir/Parser/TokenHandlers.c.o -c /home/ahmad/Documents/C/Calculator/Calculator/Parser/TokenHandlers.c",
+  "file": "/home/ahmad/Documents/C/Calculator/Calculator/Parser/TokenHandlers.c",
+  "output": "CMakeFiles/Calculator.dir/Parser/TokenHandlers.c.o"
+},
+{
+  "directory": "/home/ahmad/Documents/C/Calculator/Calculator/build",
+  "command": "/usr/bin/gcc -g -std=gnu11 -o CMakeFiles/Calculator.dir/LexerParserShared/Token.c.o -c /home/ahmad/Documents/C/Calculator/Calculator/LexerParserShared/Token.c",
+  "file": "/home/ahmad/Documents/C/Calculator/Calculator/LexerParserShared/Token.c",
+  "output": "CMakeFiles/Calculator.dir/LexerParserShared/Token.c.o"
+},
+{
+  "directory": "/home/ahmad/Documents/C/Calculator/Calculator/build",
+  "command": "/usr/bin/gcc -g -std=gnu11 -o CMakeFiles/Calculator.dir/Utils/ErrorPrinter.c.o -c /home/ahmad/Documents/C/Calculator/Calculator/Utils/ErrorPrinter.c",
+  "file": "/home/ahmad/Documents/C/Calculator/Calculator/Utils/ErrorPrinter.c",
+  "output": "CMakeFiles/Calculator.dir/Utils/ErrorPrinter.c.o"
+},
+{
+  "directory": "/home/ahmad/Documents/C/Calculator/Calculator/build",
+  "command": "/usr/bin/gcc -g -std=gnu11 -o CMakeFiles/Calculator.dir/Calculate/Calculate.c.o -c /home/ahmad/Documents/C/Calculator/Calculator/Calculate/Calculate.c",
+  "file": "/home/ahmad/Documents/C/Calculator/Calculator/Calculate/Calculate.c",
+  "output": "CMakeFiles/Calculator.dir/Calculate/Calculate.c.o"
+},
+{
+  "directory": "/home/ahmad/Documents/C/Calculator/Calculator/build",
+  "command": "/usr/bin/gcc -g -std=gnu11 -o CMakeFiles/Calculator.dir/Calculate/Math.c.o -c /home/ahmad/Documents/C/Calculator/Calculator/Calculate/Math.c",
+  "file": "/home/ahmad/Documents/C/Calculator/Calculator/Calculate/Math.c",
+  "output": "CMakeFiles/Calculator.dir/Calculate/Math.c.o"
+},
+{
+  "directory": "/home/ahmad/Documents/C/Calculator/Calculator/build",
+  "command": "/usr/bin/gcc -g -std=gnu11 -o CMakeFiles/Calculator.dir/Calculate/Number.c.o -c /home/ahmad/Documents/C/Calculator/Calculator/Calculate/Number.c",
+  "file": "/home/ahmad/Documents/C/Calculator/Calculator/Calculate/Number.c",
+  "output": "CMakeFiles/Calculator.dir/Calculate/Number.c.o"
+}
+]

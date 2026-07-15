@@ -16,7 +16,7 @@ struct ASTPool
 /// <param name="nodeType">The type of the node (e.g., NodeType_Float, NodeType_Integer, etc.).</param>
 /// <param name="position">The source code position associated with the node.</param>
 /// <param name="expressionDepth">The depth of the expression, corresponding to the level of nested parentheses.</param>
-/// <returns>Pointer to the newly created ASTNode in the ASTPool.</returns>
+/// <returns>Pointer to the newly created ASTNode in the ASTPool, or NULL if the pool is full.</returns>
 ASTNode* CreateNode ( ASTPool* astPool , ASTNodeType nodeType , Position position , int expressionDepth );
 
 /// <summary>
@@ -28,7 +28,7 @@ ASTNode* CreateNode ( ASTPool* astPool , ASTNodeType nodeType , Position positio
 /// <param name="valueLength">The length of the value data pointed by valuePtr.</param>
 /// <param name="position">The source code position associated with the node.</param>
 /// <param name="expressionDepth">The depth of the expression, corresponding to the level of nested parentheses.</param>
-/// <returns>Pointer to the newly created ASTNode in the ASTPool.</returns>
+/// <returns>Pointer to the newly created ASTNode in the ASTPool, or NULL if the pool is full.</returns>
 ASTNode* CreateValueNode ( ASTPool* astPool , ASTNodeType nodeType , const char* valuePtr , size_t valueLength , Position position , int expressionDepth );
 
 /// <summary>
@@ -36,5 +36,5 @@ ASTNode* CreateValueNode ( ASTPool* astPool , ASTNodeType nodeType , const char*
 /// </summary>
 /// <param name="astPool">Pointer to the ASTPool where the node will be created. </param>
 /// <param name="expressionDepth">The depth of the expression, corresponding to the level of nested parentheses.</param>
-/// <returns>Pointer to the newly created ASTNode in the ASTPool</returns>
+/// <returns>Pointer to the newly created ASTNode in the ASTPool, or NULL if the pool is full.</returns>
 ASTNode* CreateNoneNode(ASTPool* astPool, int expressionDepth);

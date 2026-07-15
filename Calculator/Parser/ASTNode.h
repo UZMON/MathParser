@@ -49,21 +49,24 @@ enum ASTNodeType
 };
 
 //Maps every ASTNodeType to its corresponding category .
-const NodeCategory NodeTypeCategoryTable[ ASTNodeType_Count ];
+extern const NodeCategory NodeTypeCategoryTable[ ASTNodeType_Count ];
 NodeCategory GetNodeCategory ( ASTNodeType type );
 
 //Maps every ASTNodeType to its string name.
-const char* NodeNameTable[ ASTNodeType_Count ];
+extern const char* NodeNameTable[ ASTNodeType_Count ];
 const char* GetNodeName ( ASTNodeType type );
 
 //Maps every ASTNodeType to its corresponding precedence.
-const int NodeTypePrecedenceTable[ ASTNodeType_Count ];
+extern const int NodeTypePrecedenceTable[ ASTNodeType_Count ];
 int GetNodePrecedence ( ASTNodeType type );
 
 //Returns 1 for true , 0 for false
 int isLeftAttachable ( ASTNodeType nodeType );
 //Returns 1 for true , 0 for false
 int isRightAttachable ( ASTNodeType nodeType );
+//Whether nodeType may legitimately appear without a left operand (i.e. as a unary operator, e.g. "-5").
+//Returns 1 for true , 0 for false
+int isUnaryCapable ( ASTNodeType nodeType );
 
 //The node struct which composes the AST.
 typedef struct ASTNode ASTNode;

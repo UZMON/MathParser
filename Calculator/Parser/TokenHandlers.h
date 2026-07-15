@@ -7,7 +7,7 @@
 typedef int (*TokenHandler)(ASTPool*, ASTNodeStack*, TokenArray tokenArr, size_t* currentIndex, int* expressionDepth);
 
 // Maps every Token category to its corresponding handler function.
-const TokenHandler tokenHandlerTable[TokenTypeCategory_Count];
+extern const TokenHandler tokenHandlerTable[TokenTypeCategory_Count];
 const TokenHandler GetTokenHandler(TokenTypeCategory category);
 
 // Each handler uses it's own logic to handle different categories of tokens

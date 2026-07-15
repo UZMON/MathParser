@@ -42,15 +42,15 @@ enum Symbol
 };
 
 
-const TokenType SymbolTokenTable[SymbolsCount];
+extern const TokenType SymbolTokenTable[SymbolsCount];
 const TokenType GetSymbolTokenType ( Symbol symbol );
 
-const char* SymbolNameTable[SymbolsCount];
+extern const char* SymbolNameTable[SymbolsCount];
 const char* GetSymbolName ( Symbol symbol );
 
 //Used to initialize Symbols table
-const char* Symbols[SymbolsCount];
-Symbol SymbolsTable[SYMBOL_TABLE_SIZE];
+extern const char* Symbols[SymbolsCount];
+extern Symbol SymbolsTable[SYMBOL_TABLE_SIZE];
 void InitSymbolsTable();
 // Converts the given character to a corresponding Symbol.
 Symbol GetSymbol(char Character);
