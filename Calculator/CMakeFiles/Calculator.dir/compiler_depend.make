@@ -5,6 +5,7 @@ CMakeFiles/Calculator.dir/Calculate/Calculate.c.o: Calculate/Calculate.c \
   Constants.h \
   LexerParserShared/Position.h \
   Parser/ASTNode.h \
+  Utils/ErrorPrinter.h \
   Calculate/Calculate.h \
   Calculate/Math.h \
   Calculate/Number.h \
@@ -58,10 +59,13 @@ CMakeFiles/Calculator.dir/Calculate/Calculate.c.o: Calculate/Calculate.c \
   /usr/lib/gcc/x86_64-linux-gnu/13/include/stddef.h
 
 CMakeFiles/Calculator.dir/Calculate/Math.c.o: Calculate/Math.c \
+  Utils/ErrorPrinter.h \
   Calculate/Math.h \
   Calculate/Number.h \
   /usr/include/features-time64.h \
   /usr/include/features.h \
+  /usr/include/limits.h \
+  /usr/include/linux/limits.h \
   /usr/include/math.h \
   /usr/include/stdc-predef.h \
   /usr/include/x86_64-linux-gnu/bits/floatn-common.h \
@@ -71,10 +75,15 @@ CMakeFiles/Calculator.dir/Calculate/Math.c.o: Calculate/Math.c \
   /usr/include/x86_64-linux-gnu/bits/fp-logb.h \
   /usr/include/x86_64-linux-gnu/bits/libc-header-start.h \
   /usr/include/x86_64-linux-gnu/bits/libm-simd-decl-stubs.h \
+  /usr/include/x86_64-linux-gnu/bits/local_lim.h \
   /usr/include/x86_64-linux-gnu/bits/long-double.h \
   /usr/include/x86_64-linux-gnu/bits/math-vector.h \
   /usr/include/x86_64-linux-gnu/bits/mathcalls-helper-functions.h \
   /usr/include/x86_64-linux-gnu/bits/mathcalls.h \
+  /usr/include/x86_64-linux-gnu/bits/posix1_lim.h \
+  /usr/include/x86_64-linux-gnu/bits/posix2_lim.h \
+  /usr/include/x86_64-linux-gnu/bits/pthread_stack_min-dynamic.h \
+  /usr/include/x86_64-linux-gnu/bits/pthread_stack_min.h \
   /usr/include/x86_64-linux-gnu/bits/time64.h \
   /usr/include/x86_64-linux-gnu/bits/timesize.h \
   /usr/include/x86_64-linux-gnu/bits/types.h \
@@ -82,7 +91,9 @@ CMakeFiles/Calculator.dir/Calculate/Math.c.o: Calculate/Math.c \
   /usr/include/x86_64-linux-gnu/bits/wordsize.h \
   /usr/include/x86_64-linux-gnu/gnu/stubs-64.h \
   /usr/include/x86_64-linux-gnu/gnu/stubs.h \
-  /usr/include/x86_64-linux-gnu/sys/cdefs.h
+  /usr/include/x86_64-linux-gnu/sys/cdefs.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/limits.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/syslimits.h
 
 CMakeFiles/Calculator.dir/Calculate/Number.c.o: Calculate/Number.c \
   Calculate/Number.h \
@@ -430,17 +441,29 @@ Lexer/SymbolHandlers.h:
 
 Utils/Macros.h:
 
-Utils/ErrorPrinter.h:
+/usr/lib/gcc/x86_64-linux-gnu/13/include/syslimits.h:
 
-Lexer/Lexer.c:
+/usr/include/x86_64-linux-gnu/bits/posix2_lim.h:
 
 Calculate/Number.c:
+
+/usr/include/x86_64-linux-gnu/bits/posix1_lim.h:
 
 Lexer/NumberTokenProcessor.h:
 
 /usr/include/x86_64-linux-gnu/bits/mathcalls-helper-functions.h:
 
 /usr/include/x86_64-linux-gnu/bits/math-vector.h:
+
+/usr/include/x86_64-linux-gnu/bits/local_lim.h:
+
+Parser/Parser.h:
+
+/usr/include/x86_64-linux-gnu/bits/fp-fast.h:
+
+/usr/include/x86_64-linux-gnu/bits/flt-eval-method.h:
+
+/usr/include/math.h:
 
 /usr/include/x86_64-linux-gnu/bits/floatn.h:
 
@@ -456,19 +479,7 @@ Lexer/NumberTokenProcessor.h:
 
 /usr/include/x86_64-linux-gnu/bits/typesizes.h:
 
-/usr/include/math.h:
-
 Calculate/Number.h:
-
-/usr/include/x86_64-linux-gnu/bits/mathcalls.h:
-
-/usr/include/x86_64-linux-gnu/bits/struct_mutex.h:
-
-/usr/include/endian.h:
-
-/usr/include/x86_64-linux-gnu/bits/types/timer_t.h:
-
-Calculate/Math.c:
 
 /usr/include/x86_64-linux-gnu/bits/endian.h:
 
@@ -479,6 +490,10 @@ Calculate/Math.c:
 /usr/include/x86_64-linux-gnu/bits/uintn-identity.h:
 
 /usr/include/x86_64-linux-gnu/gnu/stubs-64.h:
+
+/usr/include/stdlib.h:
+
+/usr/include/x86_64-linux-gnu/bits/types/locale_t.h:
 
 /usr/include/x86_64-linux-gnu/bits/stdio_lim.h:
 
@@ -500,15 +515,19 @@ Parser/Priority.c:
 
 /usr/include/x86_64-linux-gnu/sys/select.h:
 
-/usr/include/features-time64.h:
-
-/usr/include/stdlib.h:
-
-/usr/include/x86_64-linux-gnu/bits/types/locale_t.h:
+/usr/include/x86_64-linux-gnu/bits/wordsize.h:
 
 Parser/ASTNode.h:
 
-/usr/include/x86_64-linux-gnu/bits/wordsize.h:
+/usr/include/x86_64-linux-gnu/bits/mathcalls.h:
+
+/usr/include/x86_64-linux-gnu/bits/struct_mutex.h:
+
+/usr/include/endian.h:
+
+/usr/include/x86_64-linux-gnu/bits/types/timer_t.h:
+
+Calculate/Math.c:
 
 /usr/include/alloca.h:
 
@@ -517,6 +536,14 @@ LexerParserShared/Position.h:
 LexerParserShared/Token.h:
 
 /usr/include/x86_64-linux-gnu/bits/waitstatus.h:
+
+/usr/include/x86_64-linux-gnu/bits/pthread_stack_min-dynamic.h:
+
+/usr/include/features-time64.h:
+
+Lexer/Lexer.c:
+
+Utils/ErrorPrinter.h:
 
 /usr/include/x86_64-linux-gnu/bits/stdint-intn.h:
 
@@ -537,6 +564,8 @@ main.c:
 /usr/include/x86_64-linux-gnu/bits/time64.h:
 
 /usr/include/x86_64-linux-gnu/bits/types/sigset_t.h:
+
+/usr/include/limits.h:
 
 /usr/include/x86_64-linux-gnu/bits/pthreadtypes.h:
 
@@ -562,13 +591,11 @@ Calculate/Calculate.c:
 
 /usr/include/x86_64-linux-gnu/bits/types/__sigset_t.h:
 
-/usr/include/x86_64-linux-gnu/bits/types/__FILE.h:
-
-/usr/include/x86_64-linux-gnu/bits/types/clock_t.h:
-
 /usr/include/x86_64-linux-gnu/bits/types/__fpos64_t.h:
 
 Parser/ASTPool.h:
+
+/usr/include/x86_64-linux-gnu/bits/pthread_stack_min.h:
 
 /usr/include/x86_64-linux-gnu/bits/types/struct_timespec.h:
 
@@ -582,10 +609,12 @@ Parser/ASTPool.h:
 
 /usr/include/x86_64-linux-gnu/sys/types.h:
 
+/usr/lib/gcc/x86_64-linux-gnu/13/include/limits.h:
+
 /usr/include/x86_64-linux-gnu/bits/waitflags.h:
 
-/usr/include/x86_64-linux-gnu/bits/flt-eval-method.h:
+/usr/include/x86_64-linux-gnu/bits/types/__FILE.h:
 
-Parser/Parser.h:
+/usr/include/x86_64-linux-gnu/bits/types/clock_t.h:
 
-/usr/include/x86_64-linux-gnu/bits/fp-fast.h:
+/usr/include/linux/limits.h:

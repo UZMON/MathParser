@@ -22,7 +22,7 @@
     /* Operator Nodes */ \
     AST_NODE_TYPE(Addition, BinaryNodeCategory , 4) \
     AST_NODE_TYPE(Subtraction, BinaryNodeCategory , 4) \
-    AST_NODE_TYPE(Power, BinaryNodeCategory , 4) \
+    AST_NODE_TYPE(Power, BinaryNodeCategory , 2) \
     AST_NODE_TYPE(Multiplication, BinaryNodeCategory , 3) \
     AST_NODE_TYPE(Division, BinaryNodeCategory , 3) \
     AST_NODE_TYPE(Remainder, BinaryNodeCategory , 3) \

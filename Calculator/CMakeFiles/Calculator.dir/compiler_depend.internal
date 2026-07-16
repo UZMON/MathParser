@@ -6,6 +6,7 @@ CMakeFiles/Calculator.dir/Calculate/Calculate.c.o
  /home/ahmad/Documents/C/Calculator/Calculator/Constants.h
  /home/ahmad/Documents/C/Calculator/Calculator/LexerParserShared/Position.h
  /home/ahmad/Documents/C/Calculator/Calculator/Parser/ASTNode.h
+ /home/ahmad/Documents/C/Calculator/Calculator/Utils/ErrorPrinter.h
  /home/ahmad/Documents/C/Calculator/Calculator/Calculate/Calculate.h
  /home/ahmad/Documents/C/Calculator/Calculator/Calculate/Math.h
  /home/ahmad/Documents/C/Calculator/Calculator/Calculate/Number.h
@@ -60,10 +61,13 @@ CMakeFiles/Calculator.dir/Calculate/Calculate.c.o
 
 CMakeFiles/Calculator.dir/Calculate/Math.c.o
  /home/ahmad/Documents/C/Calculator/Calculator/Calculate/Math.c
+ /home/ahmad/Documents/C/Calculator/Calculator/Utils/ErrorPrinter.h
  /home/ahmad/Documents/C/Calculator/Calculator/Calculate/Math.h
  /home/ahmad/Documents/C/Calculator/Calculator/Calculate/Number.h
  /usr/include/features-time64.h
  /usr/include/features.h
+ /usr/include/limits.h
+ /usr/include/linux/limits.h
  /usr/include/math.h
  /usr/include/stdc-predef.h
  /usr/include/x86_64-linux-gnu/bits/floatn-common.h
@@ -73,10 +77,15 @@ CMakeFiles/Calculator.dir/Calculate/Math.c.o
  /usr/include/x86_64-linux-gnu/bits/fp-logb.h
  /usr/include/x86_64-linux-gnu/bits/libc-header-start.h
  /usr/include/x86_64-linux-gnu/bits/libm-simd-decl-stubs.h
+ /usr/include/x86_64-linux-gnu/bits/local_lim.h
  /usr/include/x86_64-linux-gnu/bits/long-double.h
  /usr/include/x86_64-linux-gnu/bits/math-vector.h
  /usr/include/x86_64-linux-gnu/bits/mathcalls-helper-functions.h
  /usr/include/x86_64-linux-gnu/bits/mathcalls.h
+ /usr/include/x86_64-linux-gnu/bits/posix1_lim.h
+ /usr/include/x86_64-linux-gnu/bits/posix2_lim.h
+ /usr/include/x86_64-linux-gnu/bits/pthread_stack_min-dynamic.h
+ /usr/include/x86_64-linux-gnu/bits/pthread_stack_min.h
  /usr/include/x86_64-linux-gnu/bits/time64.h
  /usr/include/x86_64-linux-gnu/bits/timesize.h
  /usr/include/x86_64-linux-gnu/bits/types.h
@@ -85,6 +94,8 @@ CMakeFiles/Calculator.dir/Calculate/Math.c.o
  /usr/include/x86_64-linux-gnu/gnu/stubs-64.h
  /usr/include/x86_64-linux-gnu/gnu/stubs.h
  /usr/include/x86_64-linux-gnu/sys/cdefs.h
+ /usr/lib/gcc/x86_64-linux-gnu/13/include/limits.h
+ /usr/lib/gcc/x86_64-linux-gnu/13/include/syslimits.h
 
 CMakeFiles/Calculator.dir/Calculate/Number.c.o
  /home/ahmad/Documents/C/Calculator/Calculator/Calculate/Number.c
